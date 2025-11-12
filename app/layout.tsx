@@ -21,6 +21,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <PrimeReactProvider>
                     <LayoutProvider>{children}</LayoutProvider>
                 </PrimeReactProvider>
+                
             </body>
         </html>
     );

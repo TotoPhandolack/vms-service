@@ -5,8 +5,8 @@
     left: 0;
     top: 0;
     width: 100%;
-    padding: 0 2rem;
-    background-color: var(--surface-card);
+    padding: 0 2.50rem;
+    background-color: var(--primary-color);
     transition: left $transitionDuration;
     display: flex;
     align-items: center;
@@ -22,13 +22,18 @@
         border-radius: 12px;
 
         img {
-            height: 2.5rem;
+            height: 4rem;
             margin-right: .5rem;
         }
 
-        &:focus {
-            @include focused();
+        span {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
         }
+
+
+        
     }
 
     .layout-topbar-button {
@@ -36,24 +41,24 @@
         justify-content: center;
         align-items: center;
         position: relative;
-        color: var(--text-color-secondary);
-        border-radius: 50%;
+        color: var(--surface-a);
         width: 3rem;
         height: 3rem;
         cursor: pointer;
         transition: background-color $transitionDuration;
 
         &:hover {
-            color: var(--text-color);
-            background-color: var(--surface-hover);
-        }
+            background-color: #fff;
+            color: var(--primary-color);
+            padding: 10px;
 
-        &:focus {
-            @include focused();
         }
+        &:focus {
+                @include focused-inset();
+            }
 
         i {
-            font-size: 1.5rem;
+            font-size: 2rem;
         }
 
         span {
@@ -63,7 +68,7 @@
     }
 
     .layout-menu-button {
-        margin-left: 2rem;
+        margin-left: 1rem;
     }
 
     .layout-topbar-menu-button {

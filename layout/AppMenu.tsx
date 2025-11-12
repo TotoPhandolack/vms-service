@@ -1,19 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 
-import React, { useContext } from 'react';
+import React from 'react';
 import AppMenuitem from './AppMenuitem';
-import { LayoutContext } from './context/layoutcontext';
 import { MenuProvider } from './context/menucontext';
-import Link from 'next/link';
 import { AppMenuItem } from '@/types';
+import { FaHome, FaBook, FaCar, FaUser, FaTools, FaGasPump, FaCarCrash } from 'react-icons/fa';
+import { IoMdSettings } from "react-icons/io";
+import { RiPassExpiredFill } from "react-icons/ri";
+
+
 
 const AppMenu = () => {
-    const { layoutConfig } = useContext(LayoutContext);
 
     const model: AppMenuItem[] = [
         {
-            label: 'Home',
-            items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
+            items: [{ label: 'ໜ້າຫຼັກ', icon: FaHome, to: '/' }]
         },
         // {
         //     label: 'UI Components',
@@ -51,8 +52,6 @@ const AppMenu = () => {
         //     ]
         // },
         {
-            label: 'Pages',
-            icon: 'pi pi-fw pi-briefcase',
             to: '/pages',
             items: [
                 // {
@@ -82,8 +81,8 @@ const AppMenu = () => {
                 //     ]
                 // },
                 {
-                    label: 'Crud',
-                    icon: 'pi pi-fw pi-pencil',
+                    label: 'ຄູ່ມືການນຳໃຊ້',
+                     icon: FaBook,
                     to: '/pages/crud'
                  },
                 //
@@ -100,10 +99,98 @@ const AppMenu = () => {
                 // {
                 //     label: 'Empty',
                 //     icon: 'pi pi-fw pi-circle-off',
-                //     to: '/pages/empty'
+                //     to: '/pages/empty'`
                 // }
             ]
         },
+        {
+            label: 'ຕັ້ງຄ່າ',
+            items: 
+            [
+                {
+                    label:'ຈັດການຂໍ້ມູນທົ່ວໄປ',
+                    icon: IoMdSettings,
+                    items:
+                    [
+                    
+                        { 
+                            label: 'ຂໍ້ມູນປະເພດລົດ', 
+                            to: '/pages/settingcartype' 
+                        },
+                        { 
+                            label: 'ຂໍ້ມູນປະເພດທະບຽນລົດ', 
+                            to: '/pages/#' 
+                        },
+                        { 
+                            label: 'ຂໍ້ມູນຍີ່ຫໍ້ລົດ', 
+                            to: '/pages/#' 
+                        },
+                        { 
+                            label: 'ຂໍ້ມູນລູ້ນລົດ', 
+                            to: '/pages/#' 
+                        },
+                        { 
+                            label: 'ຂໍ້ມູນປະເພດການເຊົ່າ', 
+                            to: '/pages/#' 
+                        },
+                        { 
+                            label: 'ຂໍ້ມູນຝ່າຍ', 
+                            to: '/pages/#' 
+                        },
+                        { 
+                            label: 'ຂໍ້ມູນພະແນກ/ຫ້ອງການ/ສາຂາ', 
+                            to: '/pages/#' 
+                        },
+                        { 
+                            label: 'ຂໍ້ມູນຜູ້ໃຊ້', 
+                            to: '/pages/#' 
+                        },
+                        
+                    ]
+                }
+
+            ]
+        },
+        {
+            label: 'ຂໍ້ມູນກຽວກັບລົດ',
+            items: [
+                {
+                    label: 'ຂໍ້ມູນລົດ',
+                    icon: FaCar,
+                    to: '/pages/'
+                },
+                {
+                    label: 'ຂໍ້ມູນຜູ້ນຳໃຊ້ລົດ',
+                    icon: FaUser,
+                    to: '/pages/vehicle-user'
+                },
+                {
+                    label: 'ຂໍ້ມູນສ້ອມແປງລົດ',
+                    icon: FaTools,
+                    to: '/pages/vehicle-maintenance'
+                },
+                {
+                    label: 'ກວດວັນໝົດອາຍຸລົດ',
+                    icon: RiPassExpiredFill,
+                    to: '/pages/vehicle-expiry'
+                },
+                {
+                    label: 'ຂໍ້ມູນນ້ຳມັນລົດ',
+                    icon: FaGasPump,
+                    to: '/pages/vehicle-fuel'
+                }
+            ]
+        },
+        {
+            label: 'ອຸປະຕິເຫດ',
+            items: [
+                {
+                    label: 'ສະຖິຕິການເກີດອຸປະຕິເຫດ',
+                    icon: FaCarCrash,
+                    to: '/pages/accident'
+                }
+            ]
+        }
         // {
         //     label: 'Hierarchy',
         //     items: [

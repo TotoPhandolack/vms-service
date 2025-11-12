@@ -2,6 +2,8 @@ import React, { ReactElement, Dispatch, SetStateAction, HTMLAttributeAnchorTarge
 import { NextPage } from 'next';
 import { Demo } from './demo';
 import { Toast } from 'primereact/toast';
+import { IconType } from 'react-icons';
+
 
 /* Breadcrumb Types */
 export interface AppBreadcrumbProps {
@@ -76,8 +78,8 @@ export interface MenuProps {
 }
 
 export interface MenuModel {
-    label: string;
-    icon?: string;
+    label?: string;
+    icon?: string | IconType;
     items?: MenuModel[];
     to?: string;
     url?: string;
