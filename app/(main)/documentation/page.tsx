@@ -106,7 +106,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head>
         <link
           id="theme-css"
-          href={\`/themes/lara-light-indigo/theme.css\`}
+          href={\`/themes/lara-light-blue/theme.css\`}
           rel="stylesheet"
         ></link>
       </head>
@@ -194,7 +194,7 @@ export const LayoutProvider = (props) => {
         inputStyle: 'outlined',                 //default style for input elements
         menuMode: 'static',                     //layout mode of the menu, valid values are "static" or "overlay"
         colorScheme: 'light',                   //color scheme of the template, valid values are "light", "dim" and "dark"
-        theme: 'lara-light-indigo',             //default component theme for PrimeReact
+        theme: 'lara-light-blue',             //default component theme for PrimeReact
         scale: 14                               //size of the body font size to scale the whole application
     });
 }`}

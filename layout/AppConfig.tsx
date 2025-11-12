@@ -110,8 +110,8 @@ const AppConfig = (props: AppConfigProps) => {
                 <h5>PrimeOne Design</h5>
                 <div className="grid">
                     <div className="col-3">
-                        <button className="p-link w-2rem h-2rem" onClick={() => _changeTheme('lara-light-indigo', 'light')}>
-                            <img src="/layout/images/themes/lara-light-indigo.png" className="w-2rem h-2rem" alt="Lara Light Indigo" />
+                        <button className="p-link w-2rem h-2rem" onClick={() => _changeTheme('lara-light-blue', 'light')}>
+                            <img src="/layout/images/themes/lara-light-blue.png" className="w-2rem h-2rem" alt="Lara Light Indigo" />
                         </button>
                     </div>
                     <div className="col-3">
