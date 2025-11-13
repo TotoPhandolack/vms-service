@@ -131,7 +131,7 @@ const AppMenu = () => {
                         },
                         { 
                             label: 'ຂໍ້ມູນປະເພດການເຊົ່າ', 
-                            to: '/pages/' 
+                            to: '/pages/settingrenttype' 
                         },
                         { 
                             label: 'ຂໍ້ມູນຝ່າຍ', 

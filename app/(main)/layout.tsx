@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     robots: { index: false, follow: false },
     viewport: { initialScale: 1, width: 'device-width' },
     icons: {
-        icon: '/public/layout/images/edl_logo.png'
+        icon: '/layout/images/edl_logo.png'
     }
 };
 
