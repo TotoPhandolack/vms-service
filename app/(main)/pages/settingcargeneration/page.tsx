@@ -4,15 +4,16 @@ import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
+import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { Demo } from '@/types';
 
-/* Car Brand Management Page - Connected to brands.json */
-const CarBrandPage = () => {
-    let emptyBrand: Demo.Product = {
+/* Updated component for Car Generation Management */
+const CarGenerationPage = () => {
+    let emptyGeneration: Demo.Product = {
         id: '',
         name: '',
         image: '',
@@ -24,19 +25,27 @@ const CarBrandPage = () => {
         inventoryStatus: 'INSTOCK'
     };
 
+    const [generations, setGenerations] = useState<Demo.Product[]>([]);
     const [brands, setBrands] = useState<Demo.Product[]>([]);
-    const [brandDialog, setBrandDialog] = useState(false);
-    const [deleteBrandDialog, setDeleteBrandDialog] = useState(false);
-    const [deleteBrandsDialog, setDeleteBrandsDialog] = useState(false);
-    const [brand, setBrand] = useState<Demo.Product>(emptyBrand);
-    const [selectedBrands, setSelectedBrands] = useState<Demo.Product[] | null>(null);
+    const [generationDialog, setGenerationDialog] = useState(false);
+    const [deleteGenerationDialog, setDeleteGenerationDialog] = useState(false);
+    const [deleteGenerationsDialog, setDeleteGenerationsDialog] = useState(false);
+    const [generation, setGeneration] = useState<Demo.Product>(emptyGeneration);
+    const [selectedGenerations, setSelectedGenerations] = useState<Demo.Product[] | null>(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState('');
     const toast = useRef<Toast>(null);
     const dt = useRef<DataTable<any>>(null);
 
-    // Load brands data on component mount
+    // Load data on component mount
     useEffect(() => {
+        // Load generations data
+        fetch('/demo/data/generations.json', { headers: { 'Cache-Control': 'no-cache' } })
+            .then((res) => res.json())
+            .then((d) => setGenerations(d.data as Demo.Product[]))
+            .catch((err) => console.error('Error loading generations:', err));
+
+        // Load brands data for dropdown
         fetch('/demo/data/brands.json', { headers: { 'Cache-Control': 'no-cache' } })
             .then((res) => res.json())
             .then((d) => setBrands(d.data as Demo.Product[]))
@@ -44,91 +53,88 @@ const CarBrandPage = () => {
     }, []);
 
     const openNew = () => {
-        setBrand(emptyBrand);
+        setGeneration(emptyGeneration);
         setSubmitted(false);
-        setBrandDialog(true);
+        setGenerationDialog(true);
     };
 
     const hideDialog = () => {
         setSubmitted(false);
-        setBrandDialog(false);
+        setGenerationDialog(false);
     };
 
-    const hideDeleteBrandDialog = () => {
-        setDeleteBrandDialog(false);
+    const hideDeleteGenerationDialog = () => {
+        setDeleteGenerationDialog(false);
     };
 
-    const hideDeleteBrandsDialog = () => {
-        setDeleteBrandsDialog(false);
+    const hideDeleteGenerationsDialog = () => {
+        setDeleteGenerationsDialog(false);
     };
 
-    const saveBrand = () => {
+    const saveGeneration = () => {
         setSubmitted(true);
 
-        if (brand.name.trim()) {
-            let _brands = [...brands];
-            let _brand = { ...brand };
+        if (generation.name.trim() && generation.category) {
+            let _generations = [...generations];
+            let _generation = { ...generation };
             
-            if (brand.id) {
-                // Update existing brand
-                const index = findIndexById(brand.id);
-                _brands[index] = _brand;
-                // Update category to match name
-                _brands[index].category = _brand.name;
+            if (generation.id) {
+                // Update existing generation
+                const index = findIndexById(generation.id);
+                _generations[index] = _generation;
                 toast.current?.show({
                     severity: 'success',
                     summary: 'ສຳເລັດ',
-                    detail: 'ອັບເດດຂໍ້ມູນຍີ່ຫໍ້ລົດສຳເລັດ',
+                    detail: 'ອັບເດດຂໍ້ມູນລຸ້ນລົດສຳເລັດ',
                     life: 3000
                 });
             } else {
-                // Create new brand
-                _brand.id = createId();
-                _brand.code = `BRD${String(_brands.length + 1).padStart(3, '0')}`;
-                _brand.category = _brand.name; // Set category same as name
-                _brand.image = 'product-placeholder.svg';
-                _brands.push(_brand);
+                // Create new generation
+                _generation.id = createId();
+                _generation.code = `GEN${String(_generations.length + 1).padStart(3, '0')}`;
+                _generation.image = 'product-placeholder.svg';
+                _generations.push(_generation);
                 toast.current?.show({
                     severity: 'success',
                     summary: 'ສຳເລັດ',
-                    detail: 'ເພີ່ມຂໍ້ມູນຍີ່ຫໍ້ລົດສຳເລັດ',
+                    detail: 'ເພີ່ມຂໍ້ມູນລຸ້ນລົດສຳເລັດ',
                     life: 3000
                 });
             }
 
-            setBrands(_brands);
-            setBrandDialog(false);
-            setBrand(emptyBrand);
+            setGenerations(_generations);
+            setGenerationDialog(false);
+            setGeneration(emptyGeneration);
         }
     };
 
-    const editBrand = (brand: Demo.Product) => {
-        setBrand({ ...brand });
-        setBrandDialog(true);
+    const editGeneration = (generation: Demo.Product) => {
+        setGeneration({ ...generation });
+        setGenerationDialog(true);
     };
 
-    const confirmDeleteBrand = (brand: Demo.Product) => {
-        setBrand(brand);
-        setDeleteBrandDialog(true);
+    const confirmDeleteGeneration = (generation: Demo.Product) => {
+        setGeneration(generation);
+        setDeleteGenerationDialog(true);
     };
 
-    const deleteBrand = () => {
-        let _brands = brands.filter((val) => val.id !== brand.id);
-        setBrands(_brands);
-        setDeleteBrandDialog(false);
-        setBrand(emptyBrand);
+    const deleteGeneration = () => {
+        let _generations = generations.filter((val) => val.id !== generation.id);
+        setGenerations(_generations);
+        setDeleteGenerationDialog(false);
+        setGeneration(emptyGeneration);
         toast.current?.show({
             severity: 'success',
             summary: 'ສຳເລັດ',
-            detail: 'ລົບຂໍ້ມູນຍີ່ຫໍ້ລົດສຳເລັດ',
+            detail: 'ລົບຂໍ້ມູນລຸ້ນລົດສຳເລັດ',
             life: 3000
         });
     };
 
     const findIndexById = (id: string) => {
         let index = -1;
-        for (let i = 0; i < brands.length; i++) {
-            if (brands[i].id === id) {
+        for (let i = 0; i < generations.length; i++) {
+            if (generations[i].id === id) {
                 index = i;
                 break;
             }
@@ -146,27 +152,33 @@ const CarBrandPage = () => {
     };
 
     const confirmDeleteSelected = () => {
-        setDeleteBrandsDialog(true);
+        setDeleteGenerationsDialog(true);
     };
 
-    const deleteSelectedBrands = () => {
-        let _brands = brands.filter((val) => !selectedBrands?.includes(val));
-        setBrands(_brands);
-        setDeleteBrandsDialog(false);
-        setSelectedBrands(null);
+    const deleteSelectedGenerations = () => {
+        let _generations = generations.filter((val) => !selectedGenerations?.includes(val));
+        setGenerations(_generations);
+        setDeleteGenerationsDialog(false);
+        setSelectedGenerations(null);
         toast.current?.show({
             severity: 'success',
             summary: 'ສຳເລັດ',
-            detail: 'ລົບຂໍ້ມູນຍີ່ຫໍ້ລົດທີ່ເລືອກສຳເລັດ',
+            detail: 'ລົບຂໍ້ມູນລຸ້ນລົດທີ່ເລືອກສຳເລັດ',
             life: 3000
         });
     };
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
         const val = (e.target && e.target.value) || '';
-        let _brand = { ...brand };
-        _brand[`${name}`] = val;
-        setBrand(_brand);
+        let _generation = { ...generation };
+        _generation[`${name}`] = val;
+        setGeneration(_generation);
+    };
+
+    const onCategoryChange = (e: { value: any }) => {
+        let _generation = { ...generation };
+        _generation.category = e.value;
+        setGeneration(_generation);
     };
 
     // Template functions
@@ -179,10 +191,19 @@ const CarBrandPage = () => {
         );
     };
 
-    const brandBodyTemplate = (rowData: Demo.Product) => {
+    const categoryBodyTemplate = (rowData: Demo.Product) => {
         return (
             <>
                 <span className="p-column-title">ຍີ່ຫໍ້ລົດ</span>
+                {rowData.category}
+            </>
+        );
+    };
+
+    const generationBodyTemplate = (rowData: Demo.Product) => {
+        return (
+            <>
+                <span className="p-column-title">ລຸ້ນລົດ</span>
                 {rowData.name}
             </>
         );
@@ -196,7 +217,7 @@ const CarBrandPage = () => {
                     rounded 
                     severity="success" 
                     className="mr-2" 
-                    onClick={() => editBrand(rowData)} 
+                    onClick={() => editGeneration(rowData)} 
                     tooltip="ແກ້ໄຂ"
                     tooltipOptions={{ position: 'top' }}
                 />
@@ -204,7 +225,7 @@ const CarBrandPage = () => {
                     icon="pi pi-trash" 
                     rounded 
                     severity="warning" 
-                    onClick={() => confirmDeleteBrand(rowData)} 
+                    onClick={() => confirmDeleteGeneration(rowData)} 
                     tooltip="ລົບ"
                     tooltipOptions={{ position: 'top' }}
                 />
@@ -213,24 +234,24 @@ const CarBrandPage = () => {
     };
 
     // Dialog footers
-    const brandDialogFooter = (
+    const generationDialogFooter = (
         <>
             <Button label="ຍົກເລີກ" icon="pi pi-times" text onClick={hideDialog} />
-            <Button label="ບັນທຶກ" icon="pi pi-check" text onClick={saveBrand} />
+            <Button label="ບັນທຶກ" icon="pi pi-check" text onClick={saveGeneration} />
         </>
     );
 
-    const deleteBrandDialogFooter = (
+    const deleteGenerationDialogFooter = (
         <>
-            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteBrandDialog} />
-            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteBrand} />
+            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteGenerationDialog} />
+            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteGeneration} />
         </>
     );
 
-    const deleteBrandsDialogFooter = (
+    const deleteGenerationsDialogFooter = (
         <>
-            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteBrandsDialog} />
-            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteSelectedBrands} />
+            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteGenerationsDialog} />
+            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteSelectedGenerations} />
         </>
     );
 
@@ -242,7 +263,7 @@ const CarBrandPage = () => {
 
                     {/* Title */}
                     <div className="flex justify-content-center pb-4 mb-3 border-bottom-1 border-gray-200">
-                        <h1 className="m-0 text-blue-800">ຂໍ້ມູນຍີ່ຫໍ້ລົດ</h1>
+                        <h1 className="m-0 text-blue-800">ຂໍ້ມູນລຸ້ນລົດ</h1>
                     </div>
 
                     {/* Toolbar */}
@@ -259,7 +280,7 @@ const CarBrandPage = () => {
                                 icon="pi pi-trash" 
                                 severity="danger" 
                                 onClick={confirmDeleteSelected} 
-                                disabled={!selectedBrands || !selectedBrands.length} 
+                                disabled={!selectedGenerations || !selectedGenerations.length} 
                             />
                         </div>
                         <span className="block mt-2 md:mt-0 p-input-icon-left">
@@ -275,9 +296,9 @@ const CarBrandPage = () => {
                     {/* DataTable */}
                     <DataTable
                         ref={dt}
-                        value={brands}
-                        selection={selectedBrands}
-                        onSelectionChange={(e) => setSelectedBrands(e.value as Demo.Product[])}
+                        value={generations}
+                        selection={selectedGenerations}
+                        onSelectionChange={(e) => setSelectedGenerations(e.value as Demo.Product[])}
                         dataKey="id"
                         paginator
                         rows={10}
@@ -299,10 +320,17 @@ const CarBrandPage = () => {
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
                         <Column 
-                            field="name" 
+                            field="category" 
                             header="ຍີ່ຫໍ້ລົດ" 
                             sortable 
-                            body={brandBodyTemplate} 
+                            body={categoryBodyTemplate} 
+                            headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
+                        ></Column>
+                        <Column 
+                            field="name" 
+                            header="ລຸ້ນລົດ" 
+                            sortable 
+                            body={generationBodyTemplate} 
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
                         <Column 
@@ -314,31 +342,52 @@ const CarBrandPage = () => {
 
                     {/* Create/Edit Dialog */}
                     <Dialog 
-                        visible={brandDialog} 
+                        visible={generationDialog} 
                         style={{ width: '450px' }} 
-                        header="ລາຍລະອຽດຂໍ້ມູນຍີ່ຫໍ້ລົດ" 
+                        header="ລາຍລະອຽດຂໍ້ມູນລຸ້ນລົດ" 
                         modal 
                         className="p-fluid" 
-                        footer={brandDialogFooter} 
+                        footer={generationDialogFooter} 
                         onHide={hideDialog}
                     >
                         <div className="field">
+                            <label htmlFor="category" className="font-bold">
+                                ຍີ່ຫໍ້ລົດ <span className="text-red-500">*</span>
+                            </label>
+                            <Dropdown
+                                id="category"
+                                value={generation.category}
+                                options={brands}
+                                onChange={onCategoryChange}
+                                optionLabel="name"
+                                optionValue="name"
+                                placeholder="ເລືອກຍີ່ຫໍ້ລົດ"
+                                className={classNames({
+                                    'p-invalid': submitted && !generation.category
+                                })}
+                            />
+                            {submitted && !generation.category && (
+                                <small className="p-invalid text-red-500">ກະລຸນາເລືອກຍີ່ຫໍ້ລົດ</small>
+                            )}
+                        </div>
+
+                        <div className="field">
                             <label htmlFor="name" className="font-bold">
-                                ຊື່ຍີ່ຫໍ້ລົດ <span className="text-red-500">*</span>
+                                ຊື່ລຸ້ນລົດ <span className="text-red-500">*</span>
                             </label>
                             <InputText
                                 id="name"
-                                value={brand.name}
+                                value={generation.name}
                                 onChange={(e) => onInputChange(e, 'name')}
                                 required
                                 autoFocus
-                                placeholder="ກະລຸນາປ້ອນຊື່ຍີ່ຫໍ້ລົດ (ເຊັ່ນ: Toyota, Honda)"
+                                placeholder="ກະລຸນາປ້ອນຊື່ລຸ້ນລົດ (ເຊັ່ນ: Camry 2024)"
                                 className={classNames({
-                                    'p-invalid': submitted && !brand.name
+                                    'p-invalid': submitted && !generation.name
                                 })}
                             />
-                            {submitted && !brand.name && (
-                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນຊື່ຍີ່ຫໍ້ລົດ</small>
+                            {submitted && !generation.name && (
+                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນຊື່ລຸ້ນລົດ</small>
                             )}
                         </div>
 
@@ -346,18 +395,18 @@ const CarBrandPage = () => {
 
                     {/* Delete Single Dialog */}
                     <Dialog 
-                        visible={deleteBrandDialog} 
+                        visible={deleteGenerationDialog} 
                         style={{ width: '450px' }} 
                         header="ການຢືນຢັນ" 
                         modal 
-                        footer={deleteBrandDialogFooter} 
-                        onHide={hideDeleteBrandDialog}
+                        footer={deleteGenerationDialogFooter} 
+                        onHide={hideDeleteGenerationDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {brand && (
+                            {generation && (
                                 <span>
-                                    ທ່ານຕ້ອງການລົບ <b>{brand.name}</b> ແທ້ບໍ?
+                                    ທ່ານຕ້ອງການລົບ <b>{generation.name}</b> ແທ້ບໍ?
                                 </span>
                             )}
                         </div>
@@ -365,16 +414,16 @@ const CarBrandPage = () => {
 
                     {/* Delete Multiple Dialog */}
                     <Dialog 
-                        visible={deleteBrandsDialog} 
+                        visible={deleteGenerationsDialog} 
                         style={{ width: '450px' }} 
                         header="ການຢືນຢັນ" 
                         modal 
-                        footer={deleteBrandsDialogFooter} 
-                        onHide={hideDeleteBrandsDialog}
+                        footer={deleteGenerationsDialogFooter} 
+                        onHide={hideDeleteGenerationsDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {brand && (
+                            {generation && (
                                 <span>ທ່ານຕ້ອງການລົບລາຍການທີ່ເລືອກທັງໝົດແທ້ບໍ?</span>
                             )}
                         </div>
@@ -385,4 +434,4 @@ const CarBrandPage = () => {
     );
 };
 
-export default CarBrandPage;
+export default CarGenerationPage;

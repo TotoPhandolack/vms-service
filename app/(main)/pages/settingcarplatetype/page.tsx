@@ -347,7 +347,9 @@ const Crud = () => {
                     <Dialog visible={productDialog} style={{ width: '450px' }} header="ລາຍລະອຽດປະເພດທະບຽນລົດ" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                                             {product.image && <img src={`/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
                                             <div className="field">
-                                                <label htmlFor="name">ຊື່ປະເພດທະບຽນລົດ</label>
+                                                <label htmlFor="name" className="font-bold">
+                                                ຊື່ປະເພດທະບຽນລົດ <span className="text-red-500">*</span>
+                                            </label>
                                                 <InputText
                                                     id="name"
                                                     value={product.name}

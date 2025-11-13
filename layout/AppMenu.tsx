@@ -127,7 +127,7 @@ const AppMenu = () => {
                         },
                         { 
                             label: 'ຂໍ້ມູນລຸ້ນລົດ', 
-                            to: '/pages/#' 
+                            to: '/pages/settingcargeneration' 
                         },
                         { 
                             label: 'ຂໍ້ມູນປະເພດການເຊົ່າ', 

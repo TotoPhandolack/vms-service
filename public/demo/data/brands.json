@@ -1,0 +1,124 @@
+{
+	"data": [
+		{
+			"id": "1000",
+			"code": "BRD001",
+			"name": "Toyota",
+			"description": "Japanese automobile manufacturer",
+			"image": "product-placeholder.svg",
+			"price": 0,
+			"category": "Toyota",
+			"quantity": 0,
+			"inventoryStatus": "INSTOCK",
+			"rating": 5
+		},
+		{
+			"id": "1001",
+			"code": "BRD002",
+			"name": "Honda",
+			"description": "Japanese automobile manufacturer",
+			"image": "product-placeholder.svg",
+			"price": 0,
+			"category": "Honda",
+			"quantity": 0,
+			"inventoryStatus": "INSTOCK",
+			"rating": 5
+		},
+		{
+			"id": "1002",
+			"code": "BRD003",
+			"name": "Ford",
+			"description": "American automobile manufacturer",
+			"image": "product-placeholder.svg",
+			"price": 0,
+			"category": "Ford",
+			"quantity": 0,
+			"inventoryStatus": "INSTOCK",
+			"rating": 4
+		},
+		{
+			"id": "1003",
+			"code": "BRD004",
+			"name": "Nissan",
+			"description": "Japanese automobile manufacturer",
+			"image": "product-placeholder.svg",
+			"price": 0,
+			"category": "Nissan",
+			"quantity": 0,
+			"inventoryStatus": "INSTOCK",
+			"rating": 4
+		},
+		{
+			"id": "1004",
+			"code": "BRD005",
+			"name": "Mazda",
+			"description": "Japanese automobile manufacturer",
+			"image": "product-placeholder.svg",
+			"price": 0,
+			"category": "Mazda",
+			"quantity": 0,
+			"inventoryStatus": "INSTOCK",
+			"rating": 5
+		},
+		{
+			"id": "1005",
+			"code": "BRD006",
+			"name": "Isuzu",
+			"description": "Japanese automobile manufacturer",
+			"image": "product-placeholder.svg",
+			"price": 0,
+			"category": "Isuzu",
+			"quantity": 0,
+			"inventoryStatus": "INSTOCK",
+			"rating": 4
+		},
+		{
+			"id": "1006",
+			"code": "BRD007",
+			"name": "Mitsubishi",
+			"description": "Japanese automobile manufacturer",
+			"image": "product-placeholder.svg",
+			"price": 0,
+			"category": "Mitsubishi",
+			"quantity": 0,
+			"inventoryStatus": "INSTOCK",
+			"rating": 4
+		},
+		{
+			"id": "1007",
+			"code": "BRD008",
+			"name": "Suzuki",
+			"description": "Japanese automobile manufacturer",
+			"image": "product-placeholder.svg",
+			"price": 0,
+			"category": "Suzuki",
+			"quantity": 0,
+			"inventoryStatus": "INSTOCK",
+			"rating": 4
+		},
+		{
+			"id": "1008",
+			"code": "BRD009",
+			"name": "Chevrolet",
+			"description": "American automobile manufacturer",
+			"image": "product-placeholder.svg",
+			"price": 0,
+			"category": "Chevrolet",
+			"quantity": 0,
+			"inventoryStatus": "INSTOCK",
+			"rating": 4
+		},
+		{
+			"id": "1009",
+			"code": "BRD010",
+			"name": "Hyundai",
+			"description": "South Korean automobile manufacturer",
+			"image": "product-placeholder.svg",
+			"price": 0,
+			"category": "Hyundai",
+			"quantity": 0,
+			"inventoryStatus": "INSTOCK",
+			"rating": 4
+		}
+	]
+}
