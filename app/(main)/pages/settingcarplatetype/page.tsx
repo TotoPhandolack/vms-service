@@ -306,7 +306,7 @@ const Crud = () => {
                     
                     {/* Centered Title */}
                     <div className="flex justify-content-center pb-4 mb-3 border-bottom-1 border-gray-200 ">
-                        <h1 className="m-0 text-blue-800">ຂໍ້ມູນປະເພດລົດ</h1>
+                        <h1 className="m-0 text-blue-800">ຂໍ້ມູນປະເພດທະບຽນລົດ</h1>
                     </div>
 
                     {/* Toolbar: Action Buttons (Left) + Search (Right) */}
@@ -340,26 +340,26 @@ const Crud = () => {
                     >
                         <Column selectionMode="multiple" headerStyle={{ width: '4rem' }}></Column>
                         <Column field="code" header="ລະຫັດ" sortable body={codeBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize:'1.5rem' }}></Column>
-                        <Column field="category" header="ປະເພດລົດ" sortable body={categoryBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize:'1.5rem' }}></Column>
+                        <Column field="category" header="ປະເພດທະບຽນລົດ" sortable body={categoryBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize:'1.5rem' }}></Column>
                         <Column body={actionBodyTemplate} header="ຈັດການ" headerStyle={{ minWidth: '10rem', fontSize:'1.5rem' }}></Column>
                     </DataTable>
 
-                    <Dialog visible={productDialog} style={{ width: '450px' }} header="ລາຍລະອຽດປະເພດລົດ" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+                    <Dialog visible={productDialog} style={{ width: '450px' }} header="ລາຍລະອຽດປະເພດທະບຽນລົດ" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                                             {product.image && <img src={`/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
                                             <div className="field">
-                                                <label htmlFor="name">ຊື່ປະເພດລົດ</label>
+                                                <label htmlFor="name">ຊື່ປະເພດທະບຽນລົດ</label>
                                                 <InputText
                                                     id="name"
                                                     value={product.name}
                                                     onChange={(e) => onInputChange(e, 'name')}
                                                     required
                                                     autoFocus
-                                                    placeholder='ກະລຸນາປ້ອນຊື່ປະເພດລົດ'
+                                                    placeholder='ກະລຸນາປ້ອນຊື່ປະເພດທະບຽນລົດ'
                                                     className={classNames({
                                                         'p-invalid': submitted && !product.name
                                                     })}
                                                 />
-                                                {submitted && !product.name && <small className="p-invalid text-red-500">ຕ້ອງການຊື່ປະເພດລົດ.</small>}
+                                                {submitted && !product.name && <small className="p-invalid text-red-500">ຕ້ອງການຊື່ປະເພດທະບຽນລົດ.</small>}
                                             </div>
                                             
                                         </Dialog>

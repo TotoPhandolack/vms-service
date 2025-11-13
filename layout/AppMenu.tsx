@@ -119,11 +119,11 @@ const AppMenu = () => {
                         },
                         { 
                             label: 'ຂໍ້ມູນປະເພດທະບຽນລົດ', 
-                            to: '/pages/#' 
+                            to: '/pages/settingcarplatetype' 
                         },
                         { 
                             label: 'ຂໍ້ມູນຍີ່ຫໍ້ລົດ', 
-                            to: '/pages/#' 
+                            to: '/pages/settingcarbrand' 
                         },
                         { 
                             label: 'ຂໍ້ມູນລູ້ນລົດ', 
@@ -131,7 +131,7 @@ const AppMenu = () => {
                         },
                         { 
                             label: 'ຂໍ້ມູນປະເພດການເຊົ່າ', 
-                            to: '/pages/#' 
+                            to: '/pages/' 
                         },
                         { 
                             label: 'ຂໍ້ມູນຝ່າຍ', 
