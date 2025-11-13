@@ -192,10 +192,12 @@ const CarGenerationPage = () => {
     };
 
     const categoryBodyTemplate = (rowData: Demo.Product) => {
+        // Find the brand from brands array to display
+        const brand = brands.find(b => b.name === rowData.category);
         return (
             <>
                 <span className="p-column-title">ຍີ່ຫໍ້ລົດ</span>
-                {rowData.category}
+                {brand ? brand.name : rowData.category}
             </>
         );
     };
@@ -365,6 +367,8 @@ const CarGenerationPage = () => {
                                 className={classNames({
                                     'p-invalid': submitted && !generation.category
                                 })}
+                                filter
+                                filterBy="name"
                             />
                             {submitted && !generation.category && (
                                 <small className="p-invalid text-red-500">ກະລຸນາເລືອກຍີ່ຫໍ້ລົດ</small>

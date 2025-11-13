@@ -143,7 +143,7 @@ const AppMenu = () => {
                         },
                         { 
                             label: 'ຂໍ້ມູນຜູ້ໃຊ້', 
-                            to: '/pages/#' 
+                            to: '/pages/settingusers' 
                         },
                         
                     ]
