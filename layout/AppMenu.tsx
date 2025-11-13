@@ -126,7 +126,7 @@ const AppMenu = () => {
                             to: '/pages/settingcarbrand' 
                         },
                         { 
-                            label: 'ຂໍ້ມູນລູ້ນລົດ', 
+                            label: 'ຂໍ້ມູນລຸ້ນລົດ', 
                             to: '/pages/#' 
                         },
                         { 
