@@ -127,6 +127,7 @@ declare namespace Demo {
         price?: number;
         category?: string;
         generation?:string;
+        departments?:string;
         quantity?: number;
         inventoryStatus?: InventoryStatus;
         rating?: number;

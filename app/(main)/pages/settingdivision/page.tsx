@@ -4,15 +4,16 @@ import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
+import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { Demo } from '@/types';
 
-/* Department Management Page - Connected to departments.json */
-const DepartmentPage = () => {
-    let emptyDepartment: Demo.Product = {
+/* Updated component for Car Generation Management */
+const CarGenerationPage = () => {
+    let emptyGeneration: Demo.Product = {
         id: '',
         name: '',
         image: '',
@@ -24,19 +25,27 @@ const DepartmentPage = () => {
         inventoryStatus: 'INSTOCK'
     };
 
+    const [generations, setGenerations] = useState<Demo.Product[]>([]);
     const [departments, setDepartments] = useState<Demo.Product[]>([]);
-    const [departmentDialog, setDepartmentDialog] = useState(false);
-    const [deleteDepartmentDialog, setDeleteDepartmentDialog] = useState(false);
-    const [deleteDepartmentsDialog, setDeleteDepartmentsDialog] = useState(false);
-    const [department, setDepartment] = useState<Demo.Product>(emptyDepartment);
-    const [selectedDepartments, setSelectedDepartments] = useState<Demo.Product[] | null>(null);
+    const [generationDialog, setGenerationDialog] = useState(false);
+    const [deleteGenerationDialog, setDeleteGenerationDialog] = useState(false);
+    const [deleteGenerationsDialog, setDeleteGenerationsDialog] = useState(false);
+    const [generation, setGeneration] = useState<Demo.Product>(emptyGeneration);
+    const [selectedGenerations, setSelectedGenerations] = useState<Demo.Product[] | null>(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState('');
     const toast = useRef<Toast>(null);
     const dt = useRef<DataTable<any>>(null);
 
-    // Load departments data on component mount
+    // Load data on component mount
     useEffect(() => {
+        // Load generations data
+        fetch('/demo/data/generations.json', { headers: { 'Cache-Control': 'no-cache' } })
+            .then((res) => res.json())
+            .then((d) => setGenerations(d.data as Demo.Product[]))
+            .catch((err) => console.error('Error loading generations:', err));
+
+        // Load departments data for dropdown AND table display
         fetch('/demo/data/departments.json', { headers: { 'Cache-Control': 'no-cache' } })
             .then((res) => res.json())
             .then((d) => setDepartments(d.data as Demo.Product[]))
@@ -44,91 +53,88 @@ const DepartmentPage = () => {
     }, []);
 
     const openNew = () => {
-        setDepartment(emptyDepartment);
+        setGeneration(emptyGeneration);
         setSubmitted(false);
-        setDepartmentDialog(true);
+        setGenerationDialog(true);
     };
 
     const hideDialog = () => {
         setSubmitted(false);
-        setDepartmentDialog(false);
+        setGenerationDialog(false);
     };
 
-    const hideDeleteDepartmentDialog = () => {
-        setDeleteDepartmentDialog(false);
+    const hideDeleteGenerationDialog = () => {
+        setDeleteGenerationDialog(false);
     };
 
-    const hideDeleteDepartmentsDialog = () => {
-        setDeleteDepartmentsDialog(false);
+    const hideDeleteGenerationsDialog = () => {
+        setDeleteGenerationsDialog(false);
     };
 
-    const saveDepartment = () => {
+    const saveGeneration = () => {
         setSubmitted(true);
 
-        if (department.name.trim()) {
-            let _departments = [...departments];
-            let _department = { ...department };
+        if (generation.name.trim() && generation.category) {
+            let _generations = [...generations];
+            let _generation = { ...generation };
             
-            if (department.id) {
-                // Update existing department
-                const index = findIndexById(department.id);
-                _departments[index] = _department;
-                // Update category to match name
-                _departments[index].category = _department.name;
+            if (generation.id) {
+                // Update existing generation
+                const index = findIndexById(generation.id);
+                _generations[index] = _generation;
                 toast.current?.show({
                     severity: 'success',
                     summary: 'ສຳເລັດ',
-                    detail: 'ອັບເດດຂໍ້ມູນຝ່າຍສຳເລັດ',
+                    detail: 'ອັບເດດຂໍ້ມູນພະແນກ/ສາຂາສຳເລັດ',
                     life: 3000
                 });
             } else {
-                // Create new department
-                _department.id = createId();
-                _department.code = `DEPT${String(_departments.length + 1).padStart(3, '0')}`;
-                _department.category = _department.name; // Set category same as name
-                _department.image = 'product-placeholder.svg';
-                _departments.push(_department);
+                // Create new generation
+                _generation.id = createId();
+                _generation.code = `GEN${String(_generations.length + 1).padStart(3, '0')}`;
+                _generation.image = 'product-placeholder.svg';
+                _generations.push(_generation);
                 toast.current?.show({
                     severity: 'success',
                     summary: 'ສຳເລັດ',
-                    detail: 'ເພີ່ມຂໍ້ມູນຝ່າຍສຳເລັດ',
+                    detail: 'ເພີ່ມຂໍ້ມູນພະແນກ/ສາຂາສຳເລັດ',
                     life: 3000
                 });
             }
 
-            setDepartments(_departments);
-            setDepartmentDialog(false);
-            setDepartment(emptyDepartment);
+            setGenerations(_generations);
+            setGenerationDialog(false);
+            setGeneration(emptyGeneration);
         }
     };
 
-    const editDepartment = (department: Demo.Product) => {
-        setDepartment({ ...department });
-        setDepartmentDialog(true);
+    const editGeneration = (generation: Demo.Product) => {
+        setGeneration({ ...generation });
+        setGenerationDialog(true);
     };
 
-    const confirmDeleteDepartment = (department: Demo.Product) => {
-        setDepartment(department);
-        setDeleteDepartmentDialog(true);
+    const confirmDeleteGeneration = (generation: Demo.Product) => {
+        setGeneration(generation);
+        setDeleteGenerationDialog(true);
     };
 
-    const deleteDepartment = () => {
-        let _departments = departments.filter((val) => val.id !== department.id);
-        setDepartments(_departments);
-        setDeleteDepartmentDialog(false);
-        setDepartment(emptyDepartment);
+    const deleteGeneration = () => {
+        let _generations = generations.filter((val) => val.id !== generation.id);
+        setGenerations(_generations);
+        setDeleteGenerationDialog(false);
+        setGeneration(emptyGeneration);
         toast.current?.show({
             severity: 'success',
             summary: 'ສຳເລັດ',
-            detail: 'ລົບຂໍ້ມູນຝ່າຍສຳເລັດ',
+            detail: 'ລົບຂໍ້ມູນພະແນກ/ສາຂາສຳເລັດ',
             life: 3000
         });
     };
 
     const findIndexById = (id: string) => {
         let index = -1;
-        for (let i = 0; i < departments.length; i++) {
-            if (departments[i].id === id) {
+        for (let i = 0; i < generations.length; i++) {
+            if (generations[i].id === id) {
                 index = i;
                 break;
             }
@@ -146,27 +152,33 @@ const DepartmentPage = () => {
     };
 
     const confirmDeleteSelected = () => {
-        setDeleteDepartmentsDialog(true);
+        setDeleteGenerationsDialog(true);
     };
 
-    const deleteSelectedDepartments = () => {
-        let _departments = departments.filter((val) => !selectedDepartments?.includes(val));
-        setDepartments(_departments);
-        setDeleteDepartmentsDialog(false);
-        setSelectedDepartments(null);
+    const deleteSelectedGenerations = () => {
+        let _generations = generations.filter((val) => !selectedGenerations?.includes(val));
+        setGenerations(_generations);
+        setDeleteGenerationsDialog(false);
+        setSelectedGenerations(null);
         toast.current?.show({
             severity: 'success',
             summary: 'ສຳເລັດ',
-            detail: 'ລົບຂໍ້ມູນຝ່າຍທີ່ເລືອກສຳເລັດ',
+            detail: 'ລົບຂໍ້ມູນພະແນກ/ສາຂາທີ່ເລືອກສຳເລັດ',
             life: 3000
         });
     };
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
         const val = (e.target && e.target.value) || '';
-        let _department = { ...department };
-        _department[`${name}`] = val;
-        setDepartment(_department);
+        let _generation = { ...generation };
+        _generation[`${name}`] = val;
+        setGeneration(_generation);
+    };
+
+    const onCategoryChange = (e: { value: any }) => {
+        let _generation = { ...generation };
+        _generation.category = e.value;
+        setGeneration(_generation);
     };
 
     // Template functions
@@ -179,14 +191,24 @@ const DepartmentPage = () => {
         );
     };
 
-    const departmentBodyTemplate = (rowData: Demo.Product) => {
+    const nameBodyTemplate = (rowData: Demo.Product) => {
         return (
             <>
-                <span className="p-column-title">ຝ່າຍ</span>
+                <span className="p-column-title">ຊື່ຝ່າຍ</span>
                 {rowData.name}
             </>
         );
     };
+
+    const categoryBodyTemplate = (rowData: Demo.Product) => {
+        return (
+            <>
+                <span className="p-column-title">ປະເພດ</span>
+                {rowData.category}
+            </>
+        );
+    };
+
 
     const actionBodyTemplate = (rowData: Demo.Product) => {
         return (
@@ -196,41 +218,36 @@ const DepartmentPage = () => {
                     rounded 
                     severity="success" 
                     className="mr-2" 
-                    onClick={() => editDepartment(rowData)} 
-                    tooltip="ແກ້ໄຂ"
-                    tooltipOptions={{ position: 'top' }}
+                    onClick={() => editGeneration(rowData)} 
                 />
                 <Button 
                     icon="pi pi-trash" 
                     rounded 
                     severity="warning" 
-                    onClick={() => confirmDeleteDepartment(rowData)} 
-                    tooltip="ລົບ"
-                    tooltipOptions={{ position: 'top' }}
+                    onClick={() => confirmDeleteGeneration(rowData)} 
                 />
             </>
         );
     };
 
-    // Dialog footers
-    const departmentDialogFooter = (
+    const generationDialogFooter = (
         <>
             <Button label="ຍົກເລີກ" icon="pi pi-times" text onClick={hideDialog} />
-            <Button label="ບັນທຶກ" icon="pi pi-check" text onClick={saveDepartment} />
+            <Button label="ບັນທຶກ" icon="pi pi-check" text onClick={saveGeneration} />
         </>
     );
 
-    const deleteDepartmentDialogFooter = (
+    const deleteGenerationDialogFooter = (
         <>
-            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteDepartmentDialog} />
-            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteDepartment} />
+            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteGenerationDialog} />
+            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteGeneration} />
         </>
     );
 
-    const deleteDepartmentsDialogFooter = (
+    const deleteGenerationsDialogFooter = (
         <>
-            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteDepartmentsDialog} />
-            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteSelectedDepartments} />
+            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteGenerationsDialog} />
+            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteSelectedGenerations} />
         </>
     );
 
@@ -242,7 +259,7 @@ const DepartmentPage = () => {
 
                     {/* Title */}
                     <div className="flex justify-content-center pb-4 mb-3 border-bottom-1 border-gray-200">
-                        <h1 className="m-0 text-blue-800">ຂໍ້ມູນພາກສ່ວນນຳໃຊ້ (ຝ່າຍ)</h1>
+                        <h1 className="m-0 text-blue-800">ຂໍ້ມູນພາກສ່ວນນຳໃຊ້(ພະແນກ/ສາຂາ)</h1>
                     </div>
 
                     {/* Toolbar */}
@@ -259,7 +276,7 @@ const DepartmentPage = () => {
                                 icon="pi pi-trash" 
                                 severity="danger" 
                                 onClick={confirmDeleteSelected} 
-                                disabled={!selectedDepartments || !selectedDepartments.length} 
+                                disabled={!selectedGenerations || !selectedGenerations.length} 
                             />
                         </div>
                         <span className="block mt-2 md:mt-0 p-input-icon-left">
@@ -272,12 +289,12 @@ const DepartmentPage = () => {
                         </span>
                     </div>
 
-                    {/* DataTable */}
+                    {/* DataTable - CHANGED TO DISPLAY DEPARTMENTS */}
                     <DataTable
                         ref={dt}
                         value={departments}
-                        selection={selectedDepartments}
-                        onSelectionChange={(e) => setSelectedDepartments(e.value as Demo.Product[])}
+                        selection={selectedGenerations}
+                        onSelectionChange={(e) => setSelectedGenerations(e.value as Demo.Product[])}
                         dataKey="id"
                         paginator
                         rows={10}
@@ -300,11 +317,19 @@ const DepartmentPage = () => {
                         ></Column>
                         <Column 
                             field="name" 
-                            header="ຊື່ຝ່າຍ" 
+                            header="ພາກສ່ວນນຳໃຊ້ (ຝ່າຍ)" 
                             sortable 
-                            body={departmentBodyTemplate} 
+                            body={nameBodyTemplate} 
                             headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
                         ></Column>
+                        <Column 
+                            field="category" 
+                            header="ພາກສ່ວນນຳໃຊ້ (ພະແນກ/ສາຂາ)" 
+                            sortable 
+                            body={categoryBodyTemplate} 
+                            headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
+                        ></Column>
+                       
                         <Column 
                             body={actionBodyTemplate} 
                             header="ຈັດການ" 
@@ -314,51 +339,71 @@ const DepartmentPage = () => {
 
                     {/* Create/Edit Dialog */}
                     <Dialog 
-                        visible={departmentDialog} 
+                        visible={generationDialog} 
                         style={{ width: '450px' }} 
-                        header="ລາຍລະອຽດຝ່າຍ" 
+                        header="ລາຍລະອຽດຂໍ້ມູນພະແນກ/ສາຂາ" 
                         modal 
                         className="p-fluid" 
-                        footer={departmentDialogFooter} 
+                        footer={generationDialogFooter} 
                         onHide={hideDialog}
                     >
                         <div className="field">
-                            <label htmlFor="name" className="font-bold">
+                            <label htmlFor="category" className="font-bold">
                                 ຊື່ຝ່າຍ <span className="text-red-500">*</span>
                             </label>
-                            <InputText
-                                id="name"
-                                value={department.name}
-                                onChange={(e) => onInputChange(e, 'name')}
-                                required
-                                autoFocus
-                                placeholder="ກະລຸນາປ້ອນຊື່ຝ່າຍ (ເຊັ່ນ: ຝ່າຍບໍລິຫານ)"
+                            <Dropdown
+                                id="category"
+                                value={generation.category}
+                                options={departments}
+                                onChange={onCategoryChange}
+                                optionLabel="name"
+                                optionValue="name"
+                                placeholder="ເລືອກຊື່ຝ່າຍ"
                                 className={classNames({
-                                    'p-invalid': submitted && !department.name
+                                    'p-invalid': submitted && !generation.category
                                 })}
                             />
-                            {submitted && !department.name && (
-                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນຊື່ຝ່າຍ</small>
+                            {submitted && !generation.category && (
+                                <small className="p-invalid text-red-500">ກະລຸນາເລືອກຊື່ຝ່າຍ</small>
                             )}
                         </div>
 
-                        
+                        <div className="field">
+                            <label htmlFor="name" className="font-bold">
+                                ຊື່ພະແນກ/ສາຂາ <span className="text-red-500">*</span>
+                            </label>
+                            <InputText
+                                id="name"
+                                value={generation.name}
+                                onChange={(e) => onInputChange(e, 'name')}
+                                required
+                                autoFocus
+                                placeholder="ກະລຸນາປ້ອນຊື່ພະແນກ/ສາຂາ (ເຊັ່ນ: Camry 2024)"
+                                className={classNames({
+                                    'p-invalid': submitted && !generation.name
+                                })}
+                            />
+                            {submitted && !generation.name && (
+                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນຊື່ພະແນກ/ສາຂາ</small>
+                            )}
+                        </div>
+
                     </Dialog>
 
                     {/* Delete Single Dialog */}
                     <Dialog 
-                        visible={deleteDepartmentDialog} 
+                        visible={deleteGenerationDialog} 
                         style={{ width: '450px' }} 
                         header="ການຢືນຢັນ" 
                         modal 
-                        footer={deleteDepartmentDialogFooter} 
-                        onHide={hideDeleteDepartmentDialog}
+                        footer={deleteGenerationDialogFooter} 
+                        onHide={hideDeleteGenerationDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {department && (
+                            {generation && (
                                 <span>
-                                    ທ່ານຕ້ອງການລົບ <b>{department.name}</b> ແທ້ບໍ?
+                                    ທ່ານຕ້ອງການລົບ <b>{generation.name}</b> ແທ້ບໍ?
                                 </span>
                             )}
                         </div>
@@ -366,16 +411,16 @@ const DepartmentPage = () => {
 
                     {/* Delete Multiple Dialog */}
                     <Dialog 
-                        visible={deleteDepartmentsDialog} 
+                        visible={deleteGenerationsDialog} 
                         style={{ width: '450px' }} 
                         header="ການຢືນຢັນ" 
                         modal 
-                        footer={deleteDepartmentsDialogFooter} 
-                        onHide={hideDeleteDepartmentsDialog}
+                        footer={deleteGenerationsDialogFooter} 
+                        onHide={hideDeleteGenerationsDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {department && (
+                            {generation && (
                                 <span>ທ່ານຕ້ອງການລົບລາຍການທີ່ເລືອກທັງໝົດແທ້ບໍ?</span>
                             )}
                         </div>
@@ -386,4 +431,4 @@ const DepartmentPage = () => {
     );
 };
 
-export default DepartmentPage;
+export default CarGenerationPage;

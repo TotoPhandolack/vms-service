@@ -139,7 +139,7 @@ const AppMenu = () => {
                         },
                         { 
                             label: 'ຂໍ້ມູນພະແນກ/ຫ້ອງການ/ສາຂາ', 
-                            to: '/pages/#' 
+                            to: '/pages/settingdivision' 
                         },
                         { 
                             label: 'ຂໍ້ມູນຜູ້ໃຊ້', 
