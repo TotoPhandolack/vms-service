@@ -157,7 +157,7 @@ const AppMenu = () => {
                 {
                     label: 'ຂໍ້ມູນລົດ',
                     icon: FaCar,
-                    to: '/pages/'
+                    to: '/pages/addcardisplay'
                 },
                 {
                     label: 'ຂໍ້ມູນຜູ້ນຳໃຊ້ລົດ',
