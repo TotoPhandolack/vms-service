@@ -423,7 +423,7 @@ const CarGenerationPage = () => {
                     {/* Toolbar */}
                     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-4">
                         <div className="flex gap-2">
-                            <Link href='/app/(main)/pages/addcar/page.tsx'>
+                            <Link href='/pages/addcar/'>
                             <Button 
                                 label="ເພີ່ມໃໝ່" 
                                 icon="pi pi-plus" 
