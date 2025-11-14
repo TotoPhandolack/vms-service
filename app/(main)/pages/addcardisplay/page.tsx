@@ -13,13 +13,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Demo } from '@/types';
 import Link from 'next/link';
 
-// Extended interface เพื่อรองรับข้อมูลจาก 2 แหล่ง
 interface CombinedData extends Demo.Product {
-    departmentName?: string;  // สำหรับแสดงในคอลัมน์ "ພະແນກ"
-    generationName?: string;  // สำหรับแสดงในคอลัมน์ "ຝ່າຍ"
+    departmentName?: string;  
+    generationName?: string;  
 }
 
-/* Updated component for Car Generation Management */
 const CarGenerationPage = () => {
     let emptyGeneration: Demo.Product = {
         id: '',
@@ -66,21 +64,19 @@ const CarGenerationPage = () => {
             .catch((err) => console.error('Error loading departments:', err));
     }, []);
 
-    // Combine data whenever departments or generations change
     useEffect(() => {
         if (departments.length > 0 || generations.length > 0) {
             const combined: CombinedData[] = [
-                // Map departments -> แสดงใน column "ພະແນກ"
                 ...departments.map(dept => ({
                     ...dept,
-                    departmentName: dept.name,  // ชื่อแผนก
-                    generationName: undefined   // ไม่มีข้อมูล generation
+                    departmentName: dept.name,  
+                    generationName: undefined   
                 })),
-                // Map generations -> แสดงใน column "ຝ່າຍ"  
+
                 ...generations.map(gen => ({
                     ...gen,
-                    departmentName: undefined,  // ไม่มีข้อมูล department
-                    generationName: gen.name    // ชื่อรุ่นรถ
+                    departmentName: undefined,  
+                    generationName: gen.name   
                 }))
             ];
             setCombinedData(combined);
@@ -324,7 +320,7 @@ const CarGenerationPage = () => {
                 <Button 
                     icon="pi pi-eye" 
                     rounded 
-                    severity="warning" 
+                    severity="info" 
                     className="mr-2" 
                     onClick={() => openChangePasswordDialog(rowData)}
                     tooltip="ປ່ຽນລະຫັດຜ່ານ"
@@ -427,17 +423,12 @@ const CarGenerationPage = () => {
                             <Button 
                                 label="ເພີ່ມໃໝ່" 
                                 icon="pi pi-plus" 
-                                severity="success" 
+                                className='bg-blue-800 focus:bg-blue-900'
                             />
+                            
                             </Link>
                             
-                            <Button 
-                                label="ລົບ" 
-                                icon="pi pi-trash" 
-                                severity="danger" 
-                                onClick={confirmDeleteSelected} 
-                                disabled={!selectedGenerations || !selectedGenerations.length} 
-                            />
+                           
                         </div>
 
                         <div className="flex gap-2">
@@ -454,9 +445,10 @@ const CarGenerationPage = () => {
                             <Button 
                                 label="ພິມລາຍງານ" 
                                 icon="pi pi-print" 
-                                severity="info" 
                                 onClick={printNew} 
+                                severity='danger'
                             />
+                            
                             <Button 
                                 label="Export" 
                                 icon="pi pi-file-export" 
@@ -488,7 +480,6 @@ const CarGenerationPage = () => {
                         showGridlines
                         responsiveLayout="scroll"
                     >
-                        <Column selectionMode="multiple" headerStyle={{ width: '4rem' }}></Column>
                         <Column 
                             field="code" 
                             header="ລະຫັດ" 

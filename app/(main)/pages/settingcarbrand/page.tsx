@@ -248,19 +248,7 @@ const CarBrandPage = () => {
                     {/* Toolbar */}
                     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-4">
                         <div className="flex gap-2">
-                            <Button 
-                                label="ເພີ່ມໃໝ່" 
-                                icon="pi pi-plus" 
-                                severity="success" 
-                                onClick={openNew} 
-                            />
-                            <Button 
-                                label="ລົບ" 
-                                icon="pi pi-trash" 
-                                severity="danger" 
-                                onClick={confirmDeleteSelected} 
-                                disabled={!selectedBrands || !selectedBrands.length} 
-                            />
+                            <Button label="ເພີ່ມໃໝ່" icon="pi pi-plus" className='bg-blue-800 focus:bg-blue-900 border-none' onClick={openNew} />
                         </div>
                         <span className="block mt-2 md:mt-0 p-input-icon-left">
                             <i className="pi pi-search" />
@@ -290,7 +278,6 @@ const CarBrandPage = () => {
                         showGridlines
                         responsiveLayout="scroll"
                     >
-                        <Column selectionMode="multiple" headerStyle={{ width: '4rem' }}></Column>
                         <Column 
                             field="code" 
                             header="ລະຫັດ" 
