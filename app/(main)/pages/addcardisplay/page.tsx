@@ -423,7 +423,7 @@ const CarGenerationPage = () => {
                             <Button 
                                 label="ເພີ່ມໃໝ່" 
                                 icon="pi pi-plus" 
-                                className='bg-blue-800 focus:bg-blue-900'
+                                className='bg-blue-800 focus:bg-blue-900 border-none'
                             />
                             
                             </Link>

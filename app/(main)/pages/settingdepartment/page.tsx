@@ -145,10 +145,6 @@ const DepartmentPage = () => {
         return id;
     };
 
-    const confirmDeleteSelected = () => {
-        setDeleteDepartmentsDialog(true);
-    };
-
     const deleteSelectedDepartments = () => {
         let _departments = departments.filter((val) => !selectedDepartments?.includes(val));
         setDepartments(_departments);

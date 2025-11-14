@@ -145,10 +145,6 @@ const CarBrandPage = () => {
         return id;
     };
 
-    const confirmDeleteSelected = () => {
-        setDeleteBrandsDialog(true);
-    };
-
     const deleteSelectedBrands = () => {
         let _brands = brands.filter((val) => !selectedBrands?.includes(val));
         setBrands(_brands);

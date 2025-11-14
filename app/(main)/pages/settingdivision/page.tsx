@@ -151,10 +151,6 @@ const CarGenerationPage = () => {
         return id;
     };
 
-    const confirmDeleteSelected = () => {
-        setDeleteGenerationsDialog(true);
-    };
-
     const deleteSelectedGenerations = () => {
         let _generations = generations.filter((val) => !selectedGenerations?.includes(val));
         setGenerations(_generations);

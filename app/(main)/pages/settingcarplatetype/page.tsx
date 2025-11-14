@@ -4,14 +4,10 @@ import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
-// import { FileUpload } from 'primereact/fileupload';
-import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber';
+import { InputNumberValueChangeEvent } from 'primereact/inputnumber';
 import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
-// import { Rating } from 'primereact/rating';
+import { RadioButtonChangeEvent } from 'primereact/radiobutton';
 import { Toast } from 'primereact/toast';
-// import { Toolbar } from 'primereact/toolbar';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { ProductService } from '../../../../demo/service/ProductService';
@@ -144,14 +140,6 @@ const Crud = () => {
         return id;
     };
 
-    // const exportCSV = () => {
-    //     dt.current?.exportCSV();
-    // };
-
-    const confirmDeleteSelected = () => {
-        setDeleteProductsDialog(true);
-    };
-
     const deleteSelectedProducts = () => {
         let _products = (products as any)?.filter((val: any) => !(selectedProducts as any)?.includes(val));
         setProducts(_products);
@@ -165,12 +153,6 @@ const Crud = () => {
         });
     };
 
-    const onCategoryChange = (e: RadioButtonChangeEvent) => {
-        let _product = { ...product };
-        _product['category'] = e.value;
-        setProduct(_product);
-    };
-
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
         const val = (e.target && e.target.value) || '';
         let _product = { ...product };
@@ -178,34 +160,6 @@ const Crud = () => {
 
         setProduct(_product);
     };
-
-    const onInputNumberChange = (e: InputNumberValueChangeEvent, name: string) => {
-        const val = e.value || 0;
-        let _product = { ...product };
-        _product[`${name}`] = val;
-
-        setProduct(_product);
-    };
-
-    // const leftToolbarTemplate = () => {
-    //     return (
-    //         <React.Fragment>
-    //             <div className="my-2">
-    //                 <Button label="New" icon="pi pi-plus" severity="success" className=" mr-2" onClick={openNew} />
-    //                 <Button label="Delete" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !(selectedProducts as any).length} />
-    //             </div>
-    //         </React.Fragment>
-    //     );
-    // };
-
-    // const rightToolbarTemplate = () => {
-    //     return (
-    //         <React.Fragment>
-    //             <FileUpload mode="basic" accept="image/*" maxFileSize={1000000} chooseLabel="Import" className="mr-2 inline-block" />
-    //             <Button label="Export" icon="pi pi-upload" severity="help" onClick={exportCSV} />
-    //         </React.Fragment>
-    //     );
-    // };
 
     const codeBodyTemplate = (rowData: Demo.Product) => {
         return (
@@ -216,33 +170,6 @@ const Crud = () => {
         );
     };
 
-    // const nameBodyTemplate = (rowData: Demo.Product) => {
-    //     return (
-    //         <>
-    //             <span className="p-column-title">Name</span>
-    //             {rowData.name}
-    //         </>
-    //     );
-    // };
-
-    // const imageBodyTemplate = (rowData: Demo.Product) => {
-    //     return (
-    //         <>
-    //             <span className="p-column-title">Image</span>
-    //             <img src={`/demo/images/product/${rowData.image}`} alt={rowData.image} className="shadow-2" width="100" />
-    //         </>
-    //     );
-    // };
-
-    // const priceBodyTemplate = (rowData: Demo.Product) => {
-    //     return (
-    //         <>
-    //             <span className="p-column-title">Price</span>
-    //             {formatCurrency(rowData.price as number)}
-    //         </>
-    //     );
-    // };
-
     const categoryBodyTemplate = (rowData: Demo.Product) => {
         return (
             <>
@@ -251,24 +178,6 @@ const Crud = () => {
             </>
         );
     };
-
-    // const ratingBodyTemplate = (rowData: Demo.Product) => {
-    //     return (
-    //         <>
-    //             <span className="p-column-title">Reviews</span>
-    //             <Rating value={rowData.rating} readOnly cancel={false} />
-    //         </>
-    //     );
-    // };
-
-    // const statusBodyTemplate = (rowData: Demo.Product) => {
-    //     return (
-    //         <>
-    //             <span className="p-column-title">Status</span>
-    //             <span className={`product-badge status-${rowData.inventoryStatus?.toLowerCase()}`}>{rowData.inventoryStatus}</span>
-    //         </>
-    //     );
-    // };
 
     const actionBodyTemplate = (rowData: Demo.Product) => {
         return (
