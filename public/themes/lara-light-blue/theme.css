@@ -212,6 +212,10 @@
   --primary-800:#204887;
   --primary-900:#183462;
 }
+/* Login background color */
+.login-background {
+    background-color: var(--primary-color);
+}
 
 .p-editor-container .p-editor-toolbar {
   background: #f9fafb;
