@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const axiosClientVMS = axios.create({
   baseURL: 'https://dev2-api.edl.com.la/vms-svc/api', // frontend path network hide the main start of endpoint and by /api/{service} when calling external API
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 // Request Interceptor

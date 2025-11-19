@@ -31,7 +31,8 @@ export const useUsersStore = create<UsersStore, []>((set, get) => ({
     loading: false,
     loginUser: async (userLogin) => {
         try {
-            const response = await axiosClientVMS.post('https://dev2-api.edl.com.la/vms-svc/api', userLogin);
+            const response = await axiosClientVMS.post('/Auth/Login', userLogin);
+            
             return response;
         } catch (error) {
             console.log(error);

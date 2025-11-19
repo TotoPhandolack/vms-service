@@ -13,7 +13,7 @@ const AddCarPage = () => {
     const router = useRouter();
     const toast = useRef<Toast>(null);
     const fileUploadRef = useRef<FileUpload>(null);
-    
+
     const [submitted, setSubmitted] = useState(false);
     const [carData, setCarData] = useState({
         plateNumber: '',
@@ -100,9 +100,9 @@ const AddCarPage = () => {
 
         // ตรวจสอบฟิลด์ที่จำเป็น
         if (
-            !carData.plateNumber || 
-            !carData.brand || 
-            !carData.carType || 
+            !carData.plateNumber ||
+            !carData.brand ||
+            !carData.carType ||
             !carData.color ||
             !carData.year ||
             !carData.category ||
@@ -138,55 +138,55 @@ const AddCarPage = () => {
             <div className="col-12">
                 <div className="card">
                     <Toast ref={toast} />
-                    
+
                     <h5>ເພີ່ມຂໍ້ມູນລົດ</h5>
 
                     <div className="grid">
                         {/* ອັບໂຫຼດຮູບພາບ */}
-            <div className="col-12 md:col-6">
-    <div className="flex flex-column align-items-center">
-        <div 
-            className="mb-3 flex align-items-center justify-content-center"
-            style={{ 
-                width: '250px', 
-                height: '250px', 
-                borderRadius: '5px',
-                border: carData.image ? 'none' : '2px dashed #cbd5e0',
-                backgroundColor: carData.image ? 'transparent' : '#f7fafc',
-                overflow: 'hidden'
-            }}
-        >
-            {carData.image ? (
-                <img 
-                    src={URL.createObjectURL(carData.image)} 
-                    alt="Car preview" 
-                    style={{ 
-                        width: '100%', 
-                        height: '100%', 
-                        objectFit: 'cover' 
-                    }}
-                />
-            ) : (
-                <div className="flex flex-column align-items-center justify-content-center text-center p-3">
-                    <i className="pi pi-cloud-upload text-4xl text-400 mb-2"></i>
-                    <span className="text-500 text-sm">ອັບໂຫຼດຮູບພາບລົດ</span>
-                    <span className="text-400 text-xs mt-1">Upload car image</span>
-                </div>
-            )}
-        </div>
-        <FileUpload
-            ref={fileUploadRef}
-            mode="basic"
-            name="carImage"
-            accept="image/*"
-            maxFileSize={1000000}
-            onSelect={onImageSelect}
-            chooseLabel={carData.image ? "ປ່ຽນຮູບພາບ" : "ເລືອກຮູບພາບ"}
-            className="p-button-outlined"
-        />
-       
-    </div>
-</div>
+                        <div className="col-12 md:col-6">
+                            <div className="flex flex-column align-items-center">
+                                <div
+                                    className="mb-3 flex align-items-center justify-content-center"
+                                    style={{
+                                        width: '250px',
+                                        height: '250px',
+                                        borderRadius: '5px',
+                                        border: carData.image ? 'none' : '2px dashed #cbd5e0',
+                                        backgroundColor: carData.image ? 'transparent' : '#f7fafc',
+                                        overflow: 'hidden'
+                                    }}
+                                >
+                                    {carData.image ? (
+                                        <img
+                                            src={URL.createObjectURL(carData.image)}
+                                            alt="Car preview"
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                objectFit: 'cover'
+                                            }}
+                                        />
+                                    ) : (
+                                        <div className="flex flex-column align-items-center justify-content-center text-center p-3">
+                                            <i className="pi pi-cloud-upload text-4xl text-400 mb-2"></i>
+                                            <span className="text-500 text-sm">ອັບໂຫຼດຮູບພາບລົດ</span>
+                                            <span className="text-400 text-xs mt-1">Upload car image</span>
+                                        </div>
+                                    )}
+                                </div>
+                                <FileUpload
+                                    ref={fileUploadRef}
+                                    mode="basic"
+                                    name="carImage"
+                                    accept="image/*"
+                                    maxFileSize={1000000}
+                                    onSelect={onImageSelect}
+                                    chooseLabel={carData.image ? "ປ່ຽນຮູບພາບ" : "ເລືອກຮູບພາບ"}
+                                    className="p-button-outlined"
+                                />
+
+                            </div>
+                        </div>
 
                         <div className="col-12 md:col-6">
                             <div className="grid">
@@ -511,9 +511,9 @@ const AddCarPage = () => {
 
                         {/* ປຸ່ມບັນທຶກ */}
                         <div className="col-12">
-                            <Button 
-                                label="ບັນທຶກ" 
-                                icon="pi pi-check" 
+                            <Button
+                                label="ບັນທຶກ"
+                                icon="pi pi-check"
                                 className="w-full md:w-auto"
                                 onClick={handleSubmit}
                                 style={{ backgroundColor: '#007bff', border: 'none', padding: '0.75rem 2rem' }}

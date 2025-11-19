@@ -47,6 +47,8 @@ export default function LoginForm(props: ILoginFormProps) {
       "password": data.password
     }
 
+    console.log("data :", data)
+
     try {
       setLoading(true);
       const resp: any = await loginUser(require);
