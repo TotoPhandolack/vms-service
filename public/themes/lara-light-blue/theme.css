@@ -212,6 +212,17 @@
   --primary-800:#204887;
   --primary-900:#183462;
 }
+
+/* loading icon */
+
+.login-background .p-button-label {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 1;
+}
+
+.login-background.p-button-loading .p-button-label {
+  opacity: 0;
+}
 /* Login background color */
 .login-background {
     background-color: var(--primary-color);
