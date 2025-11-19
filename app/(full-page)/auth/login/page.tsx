@@ -9,10 +9,7 @@ import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import { RiLockPasswordLine } from "react-icons/ri";
 import { LuSquareUser } from "react-icons/lu";
-
-
-
-
+import LoginForm from './login';
 
 const LoginPage = () => {
     const [password, setPassword] = useState('');
@@ -95,6 +92,7 @@ const LoginPage = () => {
                     </div>
                 </div>
             </div>
+            <LoginForm />
         </div>
     );
 };
