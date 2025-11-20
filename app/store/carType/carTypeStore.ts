@@ -129,40 +129,49 @@ export const useCarTypeStore = create<CarTypeStore>((set, get) => ({
     },
 
     updateCarType: async (updatedCarType) => {
+        set({ ...initialState, loading: true });
         try {
-            // Make API call to update the center on the server
-            const response = await axiosClientVMS.put(`/CarType/Update`, updatedCarType);
-            // Check if the API call was successful (status code 200)
+            const response = await axiosClientVMS.put(
+                `/CarType/Update`,
+                {
+                    ct_id: updatedCarType.ct_id,
+                    car_type: updatedCarType.car_type
+                }
+            );
+
+            console.log('Update Response:', response);
+
             if (response.status === 200) {
-                // Update the local state with the updated center
-                set((state) => ({
-                    dataCarType: state.dataCarType.map((center) =>
-                        center.ct_id === updatedCarType.ct_id ? updatedCarType : center
-                    ),
-                }));
-            } else {
-                console.error('Failed to update center. Status:', response.status);
+                await get().getCarTypesData();
+                set({ ...initialState, success: true });
+                return { success: true };
             }
-        } catch (error) {
-            console.error('Error updating center:', error);
+        } catch (error: any) {
+            console.error('Error updating car type:', error);
+            console.error('Error response:', error.response?.data);
+            set({ ...initialState, error: true });
+            throw error;
         }
     },
 
-    deleteUser: async (carTypeId: number) => {
+    deleteCarType: async (carTypeId: number) => {
+        set({ ...initialState, loading: true });
         try {
-            // Make API call to delete the center on the server
             const response = await axiosClientVMS.delete(`/CarType/Delete/${carTypeId}`);
-            // Check if the API call was successful (status code 200)
+
+            console.log('Delete Response:', response);
+
             if (response.status === 200) {
-                // Update the local state by removing the deleted center
-                set((state) => ({
-                    dataCarType: state.dataCarType.filter((center) => center.ct_id !== carTypeId),
-                }));
-            } else {
-                console.error('Failed to delete center. Status:', response.status);
+                // Refresh ข้อมูลหลังลบสำเร็จ
+                await get().getCarTypesData();
+                set({ ...initialState, success: true });
+                return { success: true };
             }
-        } catch (error) {
-            console.error('Error deleting center:', error);
+        } catch (error: any) {
+            console.error('Error deleting car type:', error);
+            console.error('Error response:', error.response?.data);
+            set({ ...initialState, error: true });
+            throw error;
         }
     }
 

@@ -24,7 +24,7 @@ const Crud = () => {
     const toast = useRef<Toast>(null);
     const dt = useRef<DataTable<any>>(null);
 
-    const { dataCarType, loading, getCarTypesData, addCarType, updateCarType } = useCarTypeStore();
+    const { dataCarType, loading, getCarTypesData, addCarType, updateCarType, deleteCarType } = useCarTypeStore();
 
     useEffect(() => {
         getCarTypesData();
@@ -46,38 +46,67 @@ const Crud = () => {
 
         if (carType.car_type.trim()) {
             try {
-                await addCarType(carType);
+                if (carType.ct_id && carType.ct_id > 0) {
+                    // แก้ไข
+                    await updateCarType(carType);
+                    toast.current?.show({
+                        severity: 'success',
+                        summary: 'ສຳເລັດ',
+                        detail: 'ແກ້ໄຂຂໍ້ມູນປະເພດລົດສຳເລັດ',
+                        life: 3000
+                    });
+                } else {
+                    // เพิ่มใหม่
+                    await addCarType(carType);
+                    toast.current?.show({
+                        severity: 'success',
+                        summary: 'ສຳເລັດ',
+                        detail: 'ເພີ່ມຂໍ້ມູນປະເພດລົດສຳເລັດ',
+                        life: 3000
+                    });
+                }
 
-                toast.current?.show({
-                    severity: 'success',
-                    summary: 'ສຳເລັດ',
-                    detail: 'ເພີ່ມຂໍ້ມູນປະເພດລົດສຳເລັດ',
-                    life: 3000
-                });
                 setCarTypeDialog(false);
                 setCarType(emptyCarType);
+                setSubmitted(false);
             } catch (error) {
+                console.error('Save error:', error);
                 toast.current?.show({
                     severity: 'error',
                     summary: 'ເກີດຂໍ້ຜິດພາດ',
-                    detail: 'ບໍ່ສາມາດເພີ່ມຂໍ້ມູນໄດ້',
+                    detail: carType.ct_id ? 'ບໍ່ສາມາດແກ້ໄຂຂໍ້ມູນໄດ້' : 'ບໍ່ສາມາດເພີ່ມຂໍ້ມູນໄດ້',
                     life: 3000
                 });
             }
         }
     };
 
-    const deleteProduct = () => {
-        let _carTypes = (carType as any)?.filter((val: any) => val.id !== carType.ct_id);
-        setCarType(_carTypes);
-        setDeleteCarTypeDialog(false);
-        setCarType(emptyCarType);
-        toast.current?.show({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Product Deleted',
-            life: 3000
-        });
+    const deleteCarTypeList = async () => {
+        try {
+            // เรียก API ลบจาก backend
+            await deleteCarType(carType.ct_id);
+
+            setDeleteCarTypeDialog(false);
+            setCarType(emptyCarType);
+
+            toast.current?.show({
+                severity: 'success',
+                summary: 'ສຳເລັດ',
+                detail: 'ລົບຂໍ້ມູນປະເພດລົດສຳເລັດ',
+                life: 3000
+            });
+
+            // Refresh ข้อมูลใหม่
+            await getCarTypesData();
+        } catch (error) {
+            console.error('Delete error:', error);
+            toast.current?.show({
+                severity: 'error',
+                summary: 'ເກີດຂໍ້ຜິດພາດ',
+                detail: 'ບໍ່ສາມາດລົບຂໍ້ມູນໄດ້',
+                life: 3000
+            });
+        }
     };
 
     const editCarType = (carType: CarType) => {
@@ -129,7 +158,7 @@ const Crud = () => {
     const deleteCarTypeFooter = (
         <>
             <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteCarTypeDialog} />
-            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteProduct} />
+            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteCarTypeList} />
         </>
     );
 
