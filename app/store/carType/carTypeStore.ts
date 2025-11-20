@@ -131,26 +131,42 @@ export const useCarTypeStore = create<CarTypeStore>((set, get) => ({
     updateCarType: async (updatedCarType) => {
         set({ ...initialState, loading: true });
         try {
+            const formData = new FormData();
+            formData.append('car_type', updatedCarType.car_type);
+
             const response = await axiosClientVMS.put(
-                `/CarType/Update`,
+                `/CarType/Update/${updatedCarType.ct_id}`,
+                formData,
                 {
-                    ct_id: updatedCarType.ct_id,
-                    car_type: updatedCarType.car_type
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    }
                 }
             );
 
             console.log('Update Response:', response);
 
-            if (response.status === 200) {
-                await get().getCarTypesData();
-                set({ ...initialState, success: true });
-                return { success: true };
+            if (response.status === 200 || response.status === 204) {
+                set((state) => ({
+                    ...initialState,
+                    success: true,
+                    dataCarType: state.dataCarType.map((item) =>
+                        item.ct_id === updatedCarType.ct_id
+                            ? { ...item, car_type: updatedCarType.car_type }
+                            : item
+                    ),
+                }));
+                return { success: true, data: response.data };
+            } else {
+                console.error('Failed to update car type. Status:', response.status);
+                set({ ...initialState, error: true });
+                return { success: false, error: 'Failed to update car type' };
             }
         } catch (error: any) {
             console.error('Error updating car type:', error);
             console.error('Error response:', error.response?.data);
-            set({ ...initialState, error: true });
-            throw error;
+            set({ ...initialState, error: true, errorData: error.response?.data });
+            return { success: false, error: error.response?.data?.message || 'Error updating car type' };
         }
     },
 
@@ -162,7 +178,6 @@ export const useCarTypeStore = create<CarTypeStore>((set, get) => ({
             console.log('Delete Response:', response);
 
             if (response.status === 200) {
-                // Refresh ข้อมูลหลังลบสำเร็จ
                 await get().getCarTypesData();
                 set({ ...initialState, success: true });
                 return { success: true };
