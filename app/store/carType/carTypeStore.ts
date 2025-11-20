@@ -35,7 +35,7 @@ export const useCarTypeStore = create<CarTypeStore>((set, get) => ({
         set({ ...initialState, loading: true });
         try {
             const response = await axiosClientVMS.get('/CarType/GetAll');
-            console.log("carType-data", response);
+            // console.log("carType-data", response);
             set({
                 ...initialState,
                 loading: false,
@@ -77,19 +77,54 @@ export const useCarTypeStore = create<CarTypeStore>((set, get) => ({
         }
     },
 
+    // addCarType: async (newCarType) => {
+    //     try {
+    //         // Make API call to add a new center on the server
+    //         const response = await axiosClientVMS.post('/CarType/Create', newCarType);
+    //         console.log('response :', response)
+    //         // Check if the API call was successful (status code 201)
+    //         if (response.status === 200) {
+    //             // Update the local state with the new center
+    //             await get().getCarTypesData();
+    //             set((state) => ({ dataCarType: [...state.dataCarType, response.data] }));
+    //         } else {
+    //             console.error('Failed to add center. Status:', response.status);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error adding center:', error);
+    //     }
+    // },
+
     addCarType: async (newCarType) => {
+        set({ ...initialState, loading: true });
         try {
-            // Make API call to add a new center on the server
-            const response = await axiosClientVMS.post('/CarType/Create', newCarType);
-            // Check if the API call was successful (status code 201)
-            if (response.status === 200) {
-                // Update the local state with the new center
-                set((state) => ({ dataCarType: [...state.dataCarType, response.data] }));
+            // สร้าง FormData แทน JSON
+            const formData = new FormData();
+            formData.append('car_type', newCarType.car_type);
+
+            const response = await axiosClientVMS.post('/CarType/Create', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+
+            // console.log('Add CarType Response:', response);
+
+            if (response.status === 200 || response.status === 201) {
+                // Refresh data หลังเพิ่มสำเร็จ
+                await get().getCarTypesData();
+                set({ ...initialState, success: true });
+                return { success: true, data: response.data };
             } else {
-                console.error('Failed to add center. Status:', response.status);
+                console.error('Failed to add car type. Status:', response.status);
+                set({ ...initialState, error: true });
+                return { success: false, error: 'Failed to add car type' };
             }
-        } catch (error) {
-            console.error('Error adding center:', error);
+        } catch (error: any) {
+            console.error('Error adding car type:', error);
+            console.error('Error response:', error.response?.data);
+            set({ ...initialState, error: true, errorData: error.response?.data });
+            return { success: false, error: error.response?.data?.message || 'Error adding car type' };
         }
     },
 
@@ -115,7 +150,7 @@ export const useCarTypeStore = create<CarTypeStore>((set, get) => ({
     deleteUser: async (carTypeId: number) => {
         try {
             // Make API call to delete the center on the server
-            const response = await axiosClientVMS.delete(`/Users/del/${carTypeId}`);
+            const response = await axiosClientVMS.delete(`/CarType/Delete/${carTypeId}`);
             // Check if the API call was successful (status code 200)
             if (response.status === 200) {
                 // Update the local state by removing the deleted center

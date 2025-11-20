@@ -8,106 +8,70 @@ import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
-import { ProductService } from '../../../../demo/service/ProductService';
-import { Demo } from '@/types';
+import { useCarTypeStore, CarType } from '@/app/store/carType/carTypeStore';
 
 const Crud = () => {
-    let emptyProduct: Demo.Product = {
-        id: '',
-        name: '',
-        image: '',
-        description: '',
-        category: '',
-        price: 0,
-        quantity: 0,
-        rating: 0,
-        inventoryStatus: 'INSTOCK'
+    let emptyCarType: CarType = {
+        ct_id: 0,
+        car_type: ''
     };
 
-    const [products, setProducts] = useState(null);
-    const [productDialog, setProductDialog] = useState(false);
-    const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-    const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-    const [product, setProduct] = useState<Demo.Product>(emptyProduct);
-    const [selectedProducts, setSelectedProducts] = useState(null);
+    const [carTypeDialog, setCarTypeDialog] = useState(false);
+    const [deleteCarTypeDialog, setDeleteCarTypeDialog] = useState(false);
+    const [carType, setCarType] = useState<CarType>(emptyCarType);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState('');
     const toast = useRef<Toast>(null);
     const dt = useRef<DataTable<any>>(null);
 
+    const { dataCarType, loading, getCarTypesData, addCarType } = useCarTypeStore();
+
     useEffect(() => {
-        ProductService.getProducts().then((data) => setProducts(data as any));
+        getCarTypesData();
     }, []);
 
-
     const openNew = () => {
-        setProduct(emptyProduct);
+        setCarType(emptyCarType);
         setSubmitted(false);
-        setProductDialog(true);
+        setCarTypeDialog(true);
     };
 
     const hideDialog = () => {
         setSubmitted(false);
-        setProductDialog(false);
+        setCarTypeDialog(false);
     };
 
-    const hideDeleteProductDialog = () => {
-        setDeleteProductDialog(false);
-    };
-
-    const hideDeleteProductsDialog = () => {
-        setDeleteProductsDialog(false);
-    };
-
-    const saveProduct = () => {
+    const saveCarType = async () => {
         setSubmitted(true);
 
-        if (product.name.trim()) {
-            let _products = [...(products as any)];
-            let _product = { ...product };
-            if (product.id) {
-                const index = findIndexById(product.id);
+        if (carType.car_type.trim()) {
+            try {
+                await addCarType(carType);
 
-                _products[index] = _product;
                 toast.current?.show({
                     severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Updated',
+                    summary: 'ສຳເລັດ',
+                    detail: 'ເພີ່ມຂໍ້ມູນປະເພດລົດສຳເລັດ',
                     life: 3000
                 });
-            } else {
-                _product.id = createId();
-                _product.image = 'product-placeholder.svg';
-                _products.push(_product);
+                setCarTypeDialog(false);
+                setCarType(emptyCarType);
+            } catch (error) {
                 toast.current?.show({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Created',
+                    severity: 'error',
+                    summary: 'ເກີດຂໍ້ຜິດພາດ',
+                    detail: 'ບໍ່ສາມາດເພີ່ມຂໍ້ມູນໄດ້',
                     life: 3000
                 });
             }
-
-            setProducts(_products as any);
-            setProductDialog(false);
-            setProduct(emptyProduct);
         }
     };
 
-    const editProduct = (product: Demo.Product) => {
-        setProduct({ ...product });
-        setProductDialog(true);
-    };
-
-    const confirmDeleteProduct = (product: Demo.Product) => {
-        setProduct(product);
-        setDeleteProductDialog(true);
-    };
-
     const deleteProduct = () => {
-        let _products = (products as any)?.filter((val: any) => val.id !== product.id);
-        setProducts(_products);
-        setDeleteProductDialog(false);
-        setProduct(emptyProduct);
+        let _carTypes = (carType as any)?.filter((val: any) => val.id !== carType.ct_id);
+        setCarType(_carTypes);
+        setDeleteCarTypeDialog(false);
+        setCarType(emptyCarType);
         toast.current?.show({
             severity: 'success',
             summary: 'Successful',
@@ -116,92 +80,56 @@ const Crud = () => {
         });
     };
 
-    const findIndexById = (id: string) => {
-        let index = -1;
-        for (let i = 0; i < (products as any)?.length; i++) {
-            if ((products as any)[i].id === id) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
+    const editCarType = (carType: CarType) => {
+        setCarType({ ...carType });
+        setCarTypeDialog(true);
     };
 
-    const createId = () => {
-        let id = '';
-        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
+    const confirmDeleteCarType = (carType: CarType) => {
+        setCarType(carType);
+        setDeleteCarTypeDialog(true);
     };
 
-    const deleteSelectedProducts = () => {
-        let _products = (products as any)?.filter((val: any) => !(selectedProducts as any)?.includes(val));
-        setProducts(_products);
-        setDeleteProductsDialog(false);
-        setSelectedProducts(null);
-        toast.current?.show({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Products Deleted',
-            life: 3000
-        });
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: 'car_type') => {
+        const val = e.target.value || '';
+        setCarType({ ...carType, [field]: val });
     };
 
-
-    const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
-        const val = (e.target && e.target.value) || '';
-        let _product = { ...product };
-        _product[`${name}`] = val;
-
-        setProduct(_product);
-    };
-
-    const codeBodyTemplate = (rowData: Demo.Product) => {
+    const codeBodyTemplate = (rowData: CarType) => {
         return (
             <>
                 <span className="p-column-title">Code</span>
-                {rowData.code}
+                {rowData.ct_id}
             </>
         );
     };
 
-    const categoryBodyTemplate = (rowData: Demo.Product) => {
+    const categoryBodyTemplate = (rowData: CarType) => {
         return (
             <>
                 <span className="p-column-title">Category</span>
-                {rowData.category}
+                {rowData.car_type}
             </>
         );
     };
 
-    const actionBodyTemplate = (rowData: Demo.Product) => {
+    const carTypeBodyTemplate = (rowData: CarType) => {
         return (
-            <>                
-                <Button icon="pi pi-pencil" rounded severity="success" className="mr-2" onClick={() => editProduct(rowData)} />
-                <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDeleteProduct(rowData)} />
+            <>
+                <Button icon="pi pi-pencil" rounded severity="success" className="mr-2" onClick={() => editCarType(rowData)} />
+                <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDeleteCarType(rowData)} />
             </>
         );
     };
 
-    const productDialogFooter = (
+    const hideDeleteCarTypeDialog = () => {
+        setDeleteCarTypeDialog(false);
+    };
+
+    const deleteCarTypeFooter = (
         <>
-            <Button label="ຍົກເລີກ" icon="pi pi-times" text onClick={hideDialog} />
-            <Button label="ບັນທຶກ" icon="pi pi-check" text onClick={saveProduct} />
-        </>
-    );
-    const deleteProductDialogFooter = (
-        <>
-            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteProductDialog} />
+            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteCarTypeDialog} />
             <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteProduct} />
-        </>
-    );
-    const deleteProductsDialogFooter = (
-        <>
-            <Button label="ບໍ່" icon="pi pi-times" text onClick={hideDeleteProductsDialog} />
-            <Button label="ແມ່ນ" icon="pi pi-check" text onClick={deleteSelectedProducts} />
         </>
     );
 
@@ -210,7 +138,7 @@ const Crud = () => {
             <div className="col-12">
                 <div className="card">
                     <Toast ref={toast} />
-                    
+
                     {/* Centered Title */}
                     <div className="flex justify-content-center pb-4 mb-3 border-bottom-1 border-gray-200 ">
                         <h1 className="m-0 text-blue-800">ຂໍ້ມູນປະເພດລົດ</h1>
@@ -229,63 +157,69 @@ const Crud = () => {
 
                     <DataTable
                         ref={dt}
-                        value={products}
-                        selection={selectedProducts}
-                        onSelectionChange={(e) => setSelectedProducts(e.value as any)}
-                        dataKey="id"
+                        value={dataCarType}
+                        dataKey="ct_id"
                         paginator
                         rows={10}
                         rowsPerPageOptions={[5, 10, 25]}
                         className="datatable-responsive"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} car types"
                         globalFilter={globalFilter}
-                        emptyMessage="No products found."
+                        emptyMessage="No car types found."
                         showGridlines
                         responsiveLayout="scroll"
+                        loading={loading}
                     >
-                        <Column field="code" header="ລະຫັດ" sortable body={codeBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize:'1.5rem' }}></Column>
-                        <Column field="category" header="ປະເພດລົດ" sortable body={categoryBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize:'1.5rem' }}></Column>
-                        <Column body={actionBodyTemplate} header="ຈັດການ" headerStyle={{ minWidth: '10rem', fontSize:'1.5rem' }}></Column>
+                        <Column field="ct_id" header="ລະຫັດ" sortable body={codeBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}></Column>
+                        <Column field="car_type" header="ປະເພດລົດ" sortable body={categoryBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}></Column>
+                        <Column body={carTypeBodyTemplate} header="ຈັດການ" headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}></Column>
+
                     </DataTable>
 
-                    <Dialog visible={productDialog} style={{ width: '450px' }} header="ລາຍລະອຽດປະເພດລົດ" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                                            {product.image && <img src={`/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
-                                            <div className="field">
-                                            <label htmlFor="name" className="font-bold">
-                                                ຊື່ປະເພດລົດ <span className="text-red-500">*</span>
-                                            </label>
-                                                <InputText
-                                                    id="name"
-                                                    value={product.name}
-                                                    onChange={(e) => onInputChange(e, 'name')}
-                                                    required
-                                                    autoFocus
-                                                    placeholder='ກະລຸນາປ້ອນຊື່ປະເພດລົດ'
-                                                    className={classNames({
-                                                        'p-invalid': submitted && !product.name
-                                                    })}
-                                                />
-                                                {submitted && !product.name && <small className="p-invalid text-red-500">ຕ້ອງການຊື່ປະເພດລົດ.</small>}
-                                            </div>
-                                            
-                                        </Dialog>
-
-                    <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="ການຢືນຢັນ" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
-                        <div className="flex align-items-center justify-content-center">
-                            <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {product && (
-                                <span>
-                                    ທ່ານຕ້ອງການທີ່ຈະລົບ <b>{product.name}</b> ແທ້ບໍ?
-                                </span>
+                    <Dialog
+                        visible={carTypeDialog}
+                        style={{ width: '450px' }}
+                        header="ເພີ່ມຂໍ້ມູນປະເພດລົດ"
+                        modal
+                        className="p-fluid"
+                        footer={
+                            <>
+                                <Button label="ຍົກເລີກ" icon="pi pi-times" text onClick={hideDialog} />
+                                <Button label="ບັນທຶກ" icon="pi pi-check" text onClick={saveCarType} />
+                            </>
+                        }
+                        onHide={hideDialog}
+                    >
+                        <div className="field">
+                            <label htmlFor="car_type" className="font-bold">
+                                ຊື່ປະເພດລົດ <span className="text-red-500">*</span>
+                            </label>
+                            <InputText
+                                id="car_type"
+                                value={carType.car_type}
+                                onChange={(e) => onInputChange(e, 'car_type')}
+                                required
+                                autoFocus
+                                placeholder='ກະລຸນາປ້ອນຊື່ປະເພດລົດ'
+                                className={classNames({
+                                    'p-invalid': submitted && !carType.car_type
+                                })}
+                            />
+                            {submitted && !carType.car_type && (
+                                <small className="p-invalid text-red-500">ຕ້ອງການຊື່ປະເພດລົດ.</small>
                             )}
                         </div>
                     </Dialog>
 
-                    <Dialog visible={deleteProductsDialog} style={{ width: '450px' }} header="ການຢືນຢັນ" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
+                    <Dialog visible={deleteCarTypeDialog} style={{ width: '450px' }} header="ການຢືນຢັນ" modal footer={deleteCarTypeFooter} onHide={hideDeleteCarTypeDialog}>
                         <div className="flex align-items-center justify-content-center">
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {product && <span>ທ່ານຕ້ອງການທີ່ຈະລົບລາຍການເຫຼົ່ານີ້ແທ້ບໍ?</span>}
+                            {carType && (
+                                <span>
+                                    ທ່ານຕ້ອງການທີ່ຈະລົບ <b>{carType.car_type}</b> ແທ້ບໍ?
+                                </span>
+                            )}
                         </div>
                     </Dialog>
                 </div>
