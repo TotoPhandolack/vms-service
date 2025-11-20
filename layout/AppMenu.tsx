@@ -82,9 +82,9 @@ const AppMenu = () => {
                 // },
                 {
                     label: 'ຄູ່ມືການນຳໃຊ້',
-                     icon: FaBook,
+                    icon: FaBook,
                     to: '/pages/crud'
-                 },
+                },
                 //
                 // {
                 //     label: 'Timeline',
@@ -105,51 +105,51 @@ const AppMenu = () => {
         },
         {
             label: 'ຕັ້ງຄ່າ',
-            items: 
-            [
-                {
-                    label:'ຈັດການຂໍ້ມູນທົ່ວໄປ',
-                    icon: IoMdSettings,
-                    items:
-                    [
-                    
-                        { 
-                            label: 'ຂໍ້ມູນປະເພດລົດ', 
-                            to: '/pages/settingcartype' 
-                        },
-                        { 
-                            label: 'ຂໍ້ມູນປະເພດທະບຽນລົດ', 
-                            to: '/pages/settingcarplatetype' 
-                        },
-                        { 
-                            label: 'ຂໍ້ມູນຍີ່ຫໍ້ລົດ', 
-                            to: '/pages/settingcarbrand' 
-                        },
-                        { 
-                            label: 'ຂໍ້ມູນລຸ້ນລົດ', 
-                            to: '/pages/settingcargeneration' 
-                        },
-                        { 
-                            label: 'ຂໍ້ມູນປະເພດການເຊົ່າ', 
-                            to: '/pages/settingrenttype' 
-                        },
-                        { 
-                            label: 'ຂໍ້ມູນຝ່າຍ', 
-                            to: '/pages/settingdepartment' 
-                        },
-                        { 
-                            label: 'ຂໍ້ມູນພະແນກ/ຫ້ອງການ/ສາຂາ', 
-                            to: '/pages/settingdivision' 
-                        },
-                        { 
-                            label: 'ຂໍ້ມູນຜູ້ໃຊ້', 
-                            to: '/pages/settingusers' 
-                        },
-                        
-                    ]
-                }
+            items:
+                [
+                    {
+                        label: 'ຈັດການຂໍ້ມູນທົ່ວໄປ',
+                        icon: IoMdSettings,
+                        items:
+                            [
 
-            ]
+                                {
+                                    label: 'ຂໍ້ມູນປະເພດລົດ',
+                                    to: '/pages/settingcartype'
+                                },
+                                {
+                                    label: 'ຂໍ້ມູນປະເພດທະບຽນລົດ',
+                                    to: '/pages/settingcarplatetype'
+                                },
+                                {
+                                    label: 'ຂໍ້ມູນຍີ່ຫໍ້ລົດ',
+                                    to: '/pages/settingcarbrand'
+                                },
+                                {
+                                    label: 'ຂໍ້ມູນລຸ້ນລົດ',
+                                    to: '/pages/settingcargeneration'
+                                },
+                                {
+                                    label: 'ຂໍ້ມູນປະເພດການເຊົ່າ',
+                                    to: '/pages/settingrenttype'
+                                },
+                                {
+                                    label: 'ຂໍ້ມູນຝ່າຍ',
+                                    to: '/pages/settingdepartment'
+                                },
+                                {
+                                    label: 'ຂໍ້ມູນພະແນກ/ຫ້ອງການ/ສາຂາ',
+                                    to: '/pages/settingdivision'
+                                },
+                                {
+                                    label: 'ຂໍ້ມູນຜູ້ໃຊ້',
+                                    to: '/pages/settingusers'
+                                },
+
+                            ]
+                    }
+
+                ]
         },
         {
             label: 'ຂໍ້ມູນກຽວກັບລົດ',
@@ -263,7 +263,14 @@ const AppMenu = () => {
         <MenuProvider>
             <ul className="layout-menu">
                 {model.map((item, i) => {
-                    return !item?.seperator ? <AppMenuitem item={item} root={true} index={i} key={item.label} /> : <li className="menu-separator"></li>;
+                    return !item?.seperator
+                        ? <AppMenuitem
+                            item={item}
+                            root={true}
+                            index={i}
+                            key={`menu-${i}`}
+                        />
+                        : <li className="menu-separator"></li>;
                 })}
 
                 {/* <Link href="https://blocks.primereact.org" target="_blank" style={{ cursor: 'pointer' }}>
