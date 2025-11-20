@@ -24,7 +24,7 @@ const Crud = () => {
     const toast = useRef<Toast>(null);
     const dt = useRef<DataTable<any>>(null);
 
-    const { dataCarType, loading, getCarTypesData, addCarType } = useCarTypeStore();
+    const { dataCarType, loading, getCarTypesData, addCarType, updateCarType } = useCarTypeStore();
 
     useEffect(() => {
         getCarTypesData();
@@ -180,7 +180,7 @@ const Crud = () => {
                     <Dialog
                         visible={carTypeDialog}
                         style={{ width: '450px' }}
-                        header="ເພີ່ມຂໍ້ມູນປະເພດລົດ"
+                        header={carType.ct_id ? "ແກ້ໄຂຂໍ້ມູນປະເພດລົດ" : "ເພີ່ມຂໍ້ມູນປະເພດລົດ"}
                         modal
                         className="p-fluid"
                         footer={

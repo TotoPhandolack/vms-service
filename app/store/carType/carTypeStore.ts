@@ -147,6 +147,7 @@ export const useCarTypeStore = create<CarTypeStore>((set, get) => ({
             console.error('Error updating center:', error);
         }
     },
+
     deleteUser: async (carTypeId: number) => {
         try {
             // Make API call to delete the center on the server

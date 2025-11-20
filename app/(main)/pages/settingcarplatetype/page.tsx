@@ -4,9 +4,7 @@ import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
-import { InputNumberValueChangeEvent } from 'primereact/inputnumber';
 import { InputText } from 'primereact/inputtext';
-import { RadioButtonChangeEvent } from 'primereact/radiobutton';
 import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
@@ -181,7 +179,7 @@ const Crud = () => {
 
     const actionBodyTemplate = (rowData: Demo.Product) => {
         return (
-            <>                
+            <>
                 <Button icon="pi pi-pencil" rounded severity="success" className="mr-2" onClick={() => editProduct(rowData)} />
                 <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDeleteProduct(rowData)} />
             </>
@@ -212,7 +210,7 @@ const Crud = () => {
             <div className="col-12">
                 <div className="card">
                     <Toast ref={toast} />
-                    
+
                     {/* Centered Title */}
                     <div className="flex justify-content-center pb-4 mb-3 border-bottom-1 border-gray-200 ">
                         <h1 className="m-0 text-blue-800">ຂໍ້ມູນປະເພດທະບຽນລົດ</h1>
@@ -246,32 +244,32 @@ const Crud = () => {
                         showGridlines
                         responsiveLayout="scroll"
                     >
-                        <Column field="code" header="ລະຫັດ" sortable body={codeBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize:'1.5rem' }}></Column>
-                        <Column field="category" header="ປະເພດທະບຽນລົດ" sortable body={categoryBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize:'1.5rem' }}></Column>
-                        <Column body={actionBodyTemplate} header="ຈັດການ" headerStyle={{ minWidth: '10rem', fontSize:'1.5rem' }}></Column>
+                        <Column field="code" header="ລະຫັດ" sortable body={codeBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}></Column>
+                        <Column field="category" header="ປະເພດທະບຽນລົດ" sortable body={categoryBodyTemplate} headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}></Column>
+                        <Column body={actionBodyTemplate} header="ຈັດການ" headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}></Column>
                     </DataTable>
 
                     <Dialog visible={productDialog} style={{ width: '450px' }} header="ລາຍລະອຽດປະເພດທະບຽນລົດ" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                                            {product.image && <img src={`/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
-                                            <div className="field">
-                                                <label htmlFor="name" className="font-bold">
-                                                ຊື່ປະເພດທະບຽນລົດ <span className="text-red-500">*</span>
-                                            </label>
-                                                <InputText
-                                                    id="name"
-                                                    value={product.name}
-                                                    onChange={(e) => onInputChange(e, 'name')}
-                                                    required
-                                                    autoFocus
-                                                    placeholder='ກະລຸນາປ້ອນຊື່ປະເພດທະບຽນລົດ'
-                                                    className={classNames({
-                                                        'p-invalid': submitted && !product.name
-                                                    })}
-                                                />
-                                                {submitted && !product.name && <small className="p-invalid text-red-500">ຕ້ອງການຊື່ປະເພດທະບຽນລົດ.</small>}
-                                            </div>
-                                            
-                                        </Dialog>
+                        {product.image && <img src={`/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
+                        <div className="field">
+                            <label htmlFor="name" className="font-bold">
+                                ຊື່ປະເພດທະບຽນລົດ <span className="text-red-500">*</span>
+                            </label>
+                            <InputText
+                                id="name"
+                                value={product.name}
+                                onChange={(e) => onInputChange(e, 'name')}
+                                required
+                                autoFocus
+                                placeholder='ກະລຸນາປ້ອນຊື່ປະເພດທະບຽນລົດ'
+                                className={classNames({
+                                    'p-invalid': submitted && !product.name
+                                })}
+                            />
+                            {submitted && !product.name && <small className="p-invalid text-red-500">ຕ້ອງການຊື່ປະເພດທະບຽນລົດ.</small>}
+                        </div>
+
+                    </Dialog>
 
                     <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="ການຢືນຢັນ" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                         <div className="flex align-items-center justify-content-center">
