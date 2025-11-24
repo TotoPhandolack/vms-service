@@ -1,4 +1,4 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { initialState } from '@/config/constants-api';
 import axiosClientVMS from '@/config/axiosClientVMS';
 import { Users } from '@/global/types';
@@ -8,10 +8,10 @@ import { Users } from '@/global/types';
 type UsersStore = {
     success: boolean;
     error: boolean;
-    totalCount: number
-    page: number
-    pageSize: number
-    totalPages: number
+    totalCount: number;
+    page: number;
+    pageSize: number;
+    totalPages: number;
     loading: boolean;
     dataUser: Users.User[];
     userLogin: Users.UserLogin;
@@ -29,10 +29,11 @@ export const useUsersStore = create<UsersStore, []>((set, get) => ({
     ...initialState,
     dataUser: [],
     loading: false,
+
     loginUser: async (userLogin) => {
         try {
             const response = await axiosClientVMS.post('/Auth/Login', userLogin);
-            
+
             return response;
         } catch (error) {
             console.log(error);
@@ -43,7 +44,7 @@ export const useUsersStore = create<UsersStore, []>((set, get) => ({
         set({ ...initialState, loading: true });
         try {
             const response = await axiosClientVMS.get('/api/users');
-            console.log("api-data",response )
+            console.log("api-data", response)
             set({ ...initialState, loading: false, success: true, dataUser: response.status === 200 ? response.data : [] });
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -80,7 +81,7 @@ export const useUsersStore = create<UsersStore, []>((set, get) => ({
     addUser: async (newUser) => {
         try {
             // Make API call to add a new center on the server
-            const response = await axiosClientVMS.post( '/Users/add', newUser);
+            const response = await axiosClientVMS.post('/Users/add', newUser);
             // Check if the API call was successful (status code 201)
             if (response.status === 200) {
                 // Update the local state with the new center
@@ -95,7 +96,7 @@ export const useUsersStore = create<UsersStore, []>((set, get) => ({
     updateUser: async (updatedUser) => {
         try {
             // Make API call to update the center on the server
-            const response = await axiosClientVMS.put( `/Users/update`, updatedUser);
+            const response = await axiosClientVMS.put(`/Users/update`, updatedUser);
             // Check if the API call was successful (status code 200)
             if (response.status === 200) {
                 // Update the local state with the updated center
@@ -114,7 +115,7 @@ export const useUsersStore = create<UsersStore, []>((set, get) => ({
     deleteUser: async (UserId) => {
         try {
             // Make API call to delete the center on the server
-            const response = await axiosClientVMS.delete( `/Users/del/${UserId}`);
+            const response = await axiosClientVMS.delete(`/Users/del/${UserId}`);
             // Check if the API call was successful (status code 200)
             if (response.status === 200) {
                 // Update the local state by removing the deleted center

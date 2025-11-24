@@ -8,7 +8,7 @@ import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
-import { useCarTypeStore, CarType } from '@/app/store/carType/carTypeStore';
+import { useCarTypeStore, CarType } from '@/app/store/car_type/carTypeStore';
 
 const Crud = () => {
     let emptyCarType: CarType = {
@@ -83,7 +83,6 @@ const Crud = () => {
 
     const deleteCarTypeList = async () => {
         try {
-            // เรียก API ลบจาก backend
             await deleteCarType(carType.ct_id);
 
             setDeleteCarTypeDialog(false);
@@ -96,7 +95,6 @@ const Crud = () => {
                 life: 3000
             });
 
-            // Refresh ข้อมูลใหม่
             await getCarTypesData();
         } catch (error) {
             console.error('Delete error:', error);

@@ -47,7 +47,7 @@ export default function LoginForm(props: ILoginFormProps) {
       "password": data.password
     }
 
-    console.log("data :", data)
+    // console.log("data :", data)
 
     try {
       setLoading(true);
