@@ -6,7 +6,7 @@ interface AppLayoutProps {
 }
 
 export const metadata: Metadata = {
-    title: 'VMS-SERVICE',
+    title: 'VMS SERVICE',
     description: '',
     robots: { index: false, follow: false },
     viewport: { initialScale: 1, width: 'device-width' },

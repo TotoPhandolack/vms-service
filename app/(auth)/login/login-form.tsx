@@ -54,7 +54,12 @@ export default function LoginForm(props: ILoginFormProps) {
       const resp: any = await loginUser(require);
       if (resp.status === 201 || resp.status === 200) {
         toast.success('ຍິນດີຕ້ອນຮັບ')
+
+        // เก็บ token ใน localStorage และ cookie
         localStorage.setItem('token', resp?.data?.accessToken);
+
+        // เก็บ token ใน cookie สำหรับ middleware
+        document.cookie = `token=${resp?.data?.accessToken}; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 วัน
 
         // Save login timeStamp
         localStorage.setItem('lastLoginTime', Date.now().toString())
