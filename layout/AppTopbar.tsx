@@ -7,6 +7,12 @@ import { AppTopbarRef } from '@/types';
 import { LayoutContext } from './context/layoutcontext';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { VscSignOut } from "react-icons/vsc";
+import { LuSquareUser } from "react-icons/lu";
+import { GiHamburgerMenu } from "react-icons/gi";
+
+
+
 
 const AppTopbar = forwardRef<AppTopbarRef>((_props, ref) => {
     const { layoutState, onMenuToggle, showProfileSidebar } = useContext(LayoutContext);
@@ -43,7 +49,8 @@ const AppTopbar = forwardRef<AppTopbarRef>((_props, ref) => {
             </Link>
 
             <button ref={menubuttonRef} type="button" className="p-link layout-menu-button layout-topbar-button" onClick={onMenuToggle}>
-                <i className="pi pi-bars" />
+                <GiHamburgerMenu size={25} />
+
             </button>
 
             <button ref={topbarmenubuttonRef} type="button" className="p-link layout-topbar-menu-button layout-topbar-button" onClick={showProfileSidebar}>
@@ -56,11 +63,13 @@ const AppTopbar = forwardRef<AppTopbarRef>((_props, ref) => {
                     <span>Calendar</span>
                 </button> */}
                 <button type="button" className="p-link layout-topbar-button">
-                    <i className="pi pi-user"></i>
-                    <span>Profile</span>
+                    {/* <i className="pi pi-user"></i> */}
+                    <LuSquareUser size={25} />
+                    <span>ໂປຣໄຟຣ</span>
                 </button>
                 <button type="button" className="p-link layout-topbar-button" onClick={handleLogout}>
-                    <i className="pi pi-sign-out"></i>
+                    {/* <i className="pi pi-sign-out"></i> */}
+                    <VscSignOut size={25} className='font-italic' />
                     <span>ອອກຈາກລະບົບ</span>
                 </button>
                 {/* <Link href="/documentation">

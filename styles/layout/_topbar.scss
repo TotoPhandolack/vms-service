@@ -50,8 +50,6 @@
         &:hover {
             background-color: #fff;
             color: var(--primary-color);
-            padding: 10px;
-
         }
         &:focus {
                 @include focused-inset();
