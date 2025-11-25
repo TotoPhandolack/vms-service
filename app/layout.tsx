@@ -15,13 +15,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
+                <link rel="icon" href="/favicon.ico" sizes="any" />
                 <link id="theme-css" href={`/themes/lara-light-blue/theme.css`} rel="stylesheet"></link>
             </head>
             <body>
                 <PrimeReactProvider>
                     <LayoutProvider>{children}</LayoutProvider>
                 </PrimeReactProvider>
-                
+
             </body>
         </html>
     );
