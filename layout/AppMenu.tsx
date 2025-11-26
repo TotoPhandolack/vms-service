@@ -7,100 +7,62 @@ import { AppMenuItem } from '@/types';
 import { FaHome, FaBook, FaCar, FaUser, FaTools, FaGasPump, FaCarCrash } from 'react-icons/fa';
 import { IoMdSettings } from "react-icons/io";
 import { RiPassExpiredFill } from "react-icons/ri";
+import { VscSignOut } from "react-icons/vsc";
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { authenStore } from '@/app/store/user/loginAuthStore';
 
 
 
 const AppMenu = () => {
+    const router = useRouter();
+    const { authData } = authenStore();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('lastLoginTime');
+
+        document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+
+        toast.success('ອອກຈາກລະບົບສຳເລັດ');
+
+        router.push('/login');
+    };
+
+    // Filter out Lao titles and vowels, then get first character of actual name
+    const getFirstInitial = (text: string) => {
+        if (!text) return 'U';
+
+        // Remove common Lao titles
+        let cleaned = text.replace(/^(ທ້າວ|ນາງ|ນາງສາວ|ທ່ານ)\s*/g, '');
+
+        // Remove Lao vowel marks (combining characters)
+        // \u0EB1 = ◌ັ, \u0EB4-\u0EB9 = ◌ິ ◌ີ ◌ຶ ◌ື ◌ຸ ◌ູ, \u0EBB-\u0EBD = ◌ົ ◌ຼ ◌ໍ
+        // \u0EC8-\u0ECD = tone marks ◌່ ◌້ ◌໊ ◌໋ ◌ໆ ◌໌
+        cleaned = cleaned.replace(/[\u0EB1\u0EB4-\u0EB9\u0EBB-\u0ECD]/g, '');
+
+        // Get first non-space character
+        const firstChar = cleaned.trim().charAt(0);
+        return firstChar.toUpperCase() || 'U';
+    };
+
+    const firstInitial = getFirstInitial(authData?.user?.fullname || '');
 
     const model: AppMenuItem[] = [
         {
             items: [{ label: 'ໜ້າຫຼັກ', icon: FaHome, to: '/' }]
         },
-        // {
-        //     label: 'UI Components',
-        //     items: [
-        //         { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
-        //         { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/uikit/input' },
-        //         { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', to: '/uikit/floatlabel' },
-        //         { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', to: '/uikit/invalidstate' },
-        //         { label: 'Button', icon: 'pi pi-fw pi-mobile', to: '/uikit/button', class: 'rotated-icon' },
-        //         { label: 'Table', icon: 'pi pi-fw pi-table', to: '/uikit/table' },
-        //         { label: 'List', icon: 'pi pi-fw pi-list', to: '/uikit/list' },
-        //         { label: 'Tree', icon: 'pi pi-fw pi-share-alt', to: '/uikit/tree' },
-        //         { label: 'Panel', icon: 'pi pi-fw pi-tablet', to: '/uikit/panel' },
-        //         { label: 'Overlay', icon: 'pi pi-fw pi-clone', to: '/uikit/overlay' },
-        //         { label: 'Media', icon: 'pi pi-fw pi-image', to: '/uikit/media' },
-        //         { label: 'Menu', icon: 'pi pi-fw pi-bars', to: '/uikit/menu', preventExact: true },
-        //         { label: 'Message', icon: 'pi pi-fw pi-comment', to: '/uikit/message' },
-        //         { label: 'File', icon: 'pi pi-fw pi-file', to: '/uikit/file' },
-        //         { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/charts' },
-        //         { label: 'Misc', icon: 'pi pi-fw pi-circle', to: '/uikit/misc' }
-        //     ]
-        // },
-        // {
-        //     label: 'Prime Blocks',
-        //     items: [
-        //         { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', to: '/blocks', badge: 'NEW' },
-        //         { label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: 'https://blocks.primereact.org', target: '_blank' }
-        //     ]
-        // },
-        // {
-        //     label: 'Utilities',
-        //     items: [
-        //         { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', to: '/utilities/icons' },
-        //         { label: 'PrimeFlex', icon: 'pi pi-fw pi-desktop', url: 'https://primeflex.org/', target: '_blank' }
-        //     ]
-        // },
+
         {
             to: '/pages',
             items: [
-                // {
-                //     label: 'Landing',
-                //     icon: 'pi pi-fw pi-globe',
-                //     to: '/landing'
-                // },
-                // {
-                //     label: 'Auth',
-                //     icon: 'pi pi-fw pi-user',
-                //     items: [
-                //         {
-                //             label: 'Login',
-                //             icon: 'pi pi-fw pi-sign-in',
-                //             to: '/auth/login'
-                //         },
-                //         {
-                //             label: 'Error',
-                //             icon: 'pi pi-fw pi-times-circle',
-                //             to: '/auth/error'
-                //         },
-                //         {
-                //             label: 'Access Denied',
-                //             icon: 'pi pi-fw pi-lock',
-                //             to: '/auth/access'
-                //         }
-                //     ]
-                // },
+
                 {
                     label: 'ຄູ່ມືການນຳໃຊ້',
                     icon: FaBook,
                     to: '/pages/crud'
                 },
-                //
-                // {
-                //     label: 'Timeline',
-                //     icon: 'pi pi-fw pi-calendar',
-                //     to: '/pages/timeline'
-                // },
-                // {
-                //     label: 'Not Found',
-                //     icon: 'pi pi-fw pi-exclamation-circle',
-                //     to: '/pages/notfound'
-                // },
-                // {
-                //     label: 'Empty',
-                //     icon: 'pi pi-fw pi-circle-off',
-                //     to: '/pages/empty'`
-                // }
+
             ]
         },
         {
@@ -191,72 +153,7 @@ const AppMenu = () => {
                 }
             ]
         }
-        // {
-        //     label: 'Hierarchy',
-        //     items: [
-        //         {
-        //             label: 'Submenu 1',
-        //             icon: 'pi pi-fw pi-bookmark',
-        //             items: [
-        //                 {
-        //                     label: 'Submenu 1.1',
-        //                     icon: 'pi pi-fw pi-bookmark',
-        //                     items: [
-        //                         { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
-        //                         { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
-        //                         { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' }
-        //                     ]
-        //                 },
-        //                 {
-        //                     label: 'Submenu 1.2',
-        //                     icon: 'pi pi-fw pi-bookmark',
-        //                     items: [{ label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark' }]
-        //                 }
-        //             ]
-        //         },
-        //         {
-        //             label: 'Submenu 2',
-        //             icon: 'pi pi-fw pi-bookmark',
-        //             items: [
-        //                 {
-        //                     label: 'Submenu 2.1',
-        //                     icon: 'pi pi-fw pi-bookmark',
-        //                     items: [
-        //                         { label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark' },
-        //                         { label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark' }
-        //                     ]
-        //                 },
-        //                 {
-        //                     label: 'Submenu 2.2',
-        //                     icon: 'pi pi-fw pi-bookmark',
-        //                     items: [{ label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark' }]
-        //                 }
-        //             ]
-        //         }
-        //     ]
-        // },
-        // {
-        //     label: 'Get Started',
-        //     items: [
-        //         {
-        //             label: 'Documentation',
-        //             icon: 'pi pi-fw pi-question',
-        //             to: '/documentation'
-        //         },
-        //         {
-        //             label: 'Figma',
-        //             url: 'https://www.dropbox.com/scl/fi/bhfwymnk8wu0g5530ceas/sakai-2023.fig?rlkey=u0c8n6xgn44db9t4zkd1brr3l&dl=0',
-        //             icon: 'pi pi-fw pi-pencil',
-        //             target: '_blank'
-        //         },
-        //         {
-        //             label: 'View Source',
-        //             icon: 'pi pi-fw pi-search',
-        //             url: 'https://github.com/primefaces/sakai-react',
-        //             target: '_blank'
-        //         }
-        //     ]
-        // }
+
     ];
 
     return (
@@ -272,11 +169,27 @@ const AppMenu = () => {
                         />
                         : <li className="menu-separator"></li>;
                 })}
-
-                {/* <Link href="https://blocks.primereact.org" target="_blank" style={{ cursor: 'pointer' }}>
-                    <img alt="Prime Blocks" className="w-full mt-3" src={`/layout/images/banner-primeblocks${layoutConfig.colorScheme === 'light' ? '' : '-dark'}.png`} />
-                </Link> */}
             </ul>
+
+            <div className="sidebar-user-section">
+                <div className="sidebar-user-info">
+                    <div className="sidebar-profile-icon">
+                        {firstInitial}
+                    </div>
+                    <div className="sidebar-user-details">
+                        <div className="sidebar-username">{authData?.user?.fullname || 'User'}</div>
+                        <div className="sidebar-status">ສະຖານະ: <span className='font-bold text-white'>{authData?.user?.position_name}</span></div>
+                    </div>
+                </div>
+                <button
+                    type="button"
+                    className="sidebar-logout-button"
+                    onClick={handleLogout}
+                    title="ອອກຈາກລະບົບ"
+                >
+                    <VscSignOut size={22} />
+                </button>
+            </div>
         </MenuProvider>
     );
 };

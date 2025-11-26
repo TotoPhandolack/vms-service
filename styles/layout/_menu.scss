@@ -12,6 +12,8 @@
     border-radius: $borderRadius;
     padding: 0.5rem 1.5rem;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, .02), 0px 0px 2px rgba(0, 0, 0, .05), 0px 1px 4px rgba(0, 0, 0, .08);
+    display: flex;
+    flex-direction: column;
 }
 
 .layout-menu {
@@ -19,6 +21,8 @@
     padding: 0;
     list-style-type: none;
     user-select: none;
+    flex: 1;
+    overflow-y: auto;
 
     .layout-root-menuitem {
         >.layout-menuitem-root-text {
@@ -158,4 +162,90 @@
     overflow: hidden;
     max-height: 0 !important;
     transition: max-height 0.45s cubic-bezier(0, 1, 0, 1);
+}
+
+.sidebar-user-section {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--primary-color);
+    padding: 1rem 0;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+
+    .sidebar-user-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .sidebar-profile-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background-color: #fff;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .sidebar-user-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .sidebar-username {
+        color: var(--surface-a);
+        font-weight: 600;
+        font-size: 0.95rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sidebar-status {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.8rem;
+    }
+
+    .sidebar-logout-button {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: $borderRadius;
+        background-color: transparent;
+        border: none;
+        color: var(--surface-a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color $transitionDuration, transform 0.2s;
+        flex-shrink: 0;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(2px);
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+
+        &:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+    }
 }

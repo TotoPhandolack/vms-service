@@ -82,9 +82,30 @@
         padding: 0;
         list-style: none;
         display: flex;
+        align-items: center;
 
         .layout-topbar-button {
             margin-left: 1rem;
+        }
+
+        .profile-icon-circle {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background-color: #fff;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+
+            &:hover {
+                transform: scale(1.05);
+                box-shadow: 0 2px 8px rgba(0,0,0,.15);
+            }
         }
     }
 }
@@ -120,7 +141,7 @@
             right: 2rem;
             top: 5rem;
             min-width: 15rem;
-            display: none;
+            display: block;
             -webkit-animation: scalein 0.15s linear;
             animation: scalein 0.15s linear;
 
