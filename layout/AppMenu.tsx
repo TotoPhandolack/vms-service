@@ -14,6 +14,7 @@ import { authenStore } from '@/app/store/user/loginAuthStore';
 
 
 
+
 const AppMenu = () => {
     const router = useRouter();
     const { authData } = authenStore();
@@ -124,7 +125,7 @@ const AppMenu = () => {
                 {
                     label: 'ຂໍ້ມູນຜູ້ນຳໃຊ້ລົດ',
                     icon: FaUser,
-                    to: '/pages/vehicle-user'
+                    to: '/pages/addcaruser'
                 },
                 {
                     label: 'ຂໍ້ມູນສ້ອມແປງລົດ',
@@ -178,7 +179,8 @@ const AppMenu = () => {
                     </div>
                     <div className="sidebar-user-details">
                         <div className="sidebar-username">{authData?.user?.fullname || 'User'}</div>
-                        <div className="sidebar-status">ສະຖານະ: <span className='font-bold text-white'>{authData?.user?.position_name}</span></div>
+                        <div className="sidebar-status">ສະຖານະ: <span className='font-bold text-white'>
+                            {authData?.user?.position_name}</span></div>
                     </div>
                 </div>
                 <button

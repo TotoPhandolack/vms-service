@@ -141,12 +141,12 @@
             right: 2rem;
             top: 5rem;
             min-width: 15rem;
-            display: block;
+            display: none;
             -webkit-animation: scalein 0.15s linear;
             animation: scalein 0.15s linear;
 
             &.layout-topbar-menu-mobile-active {
-                display: block
+                display: block;
             }
 
             .layout-topbar-button {
