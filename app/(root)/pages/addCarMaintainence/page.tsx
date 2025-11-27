@@ -473,7 +473,7 @@ const AddCarMainTainence = () => {
                     {/* Toolbar */}
                     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-4">
                         <div className="flex gap-2">
-                            <Link href='/pages/addcar/'>
+                            <Link href='/pages/addcarmaintainenceForm'>
                                 <Button
                                     label="ເພີ່ມໃໝ່"
                                     icon="pi pi-plus"
