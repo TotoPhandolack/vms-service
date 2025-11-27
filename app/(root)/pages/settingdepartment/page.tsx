@@ -11,7 +11,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Demo } from '@/types';
 
 /* Department Management Page - Connected to departments.json */
-const DepartmentPage = () => {
+const SettingDepartment = () => {
     let emptyDepartment: Demo.Product = {
         id: '',
         name: '',
@@ -68,7 +68,7 @@ const DepartmentPage = () => {
         if (department.name.trim()) {
             let _departments = [...departments];
             let _department = { ...department };
-            
+
             if (department.id) {
                 // Update existing department
                 const index = findIndexById(department.id);
@@ -187,20 +187,20 @@ const DepartmentPage = () => {
     const actionBodyTemplate = (rowData: Demo.Product) => {
         return (
             <>
-                <Button 
-                    icon="pi pi-pencil" 
-                    rounded 
-                    severity="success" 
-                    className="mr-2" 
-                    onClick={() => editDepartment(rowData)} 
+                <Button
+                    icon="pi pi-pencil"
+                    rounded
+                    severity="success"
+                    className="mr-2"
+                    onClick={() => editDepartment(rowData)}
                     tooltip="ແກ້ໄຂ"
                     tooltipOptions={{ position: 'top' }}
                 />
-                <Button 
-                    icon="pi pi-trash" 
-                    rounded 
-                    severity="warning" 
-                    onClick={() => confirmDeleteDepartment(rowData)} 
+                <Button
+                    icon="pi pi-trash"
+                    rounded
+                    severity="warning"
+                    onClick={() => confirmDeleteDepartment(rowData)}
                     tooltip="ລົບ"
                     tooltipOptions={{ position: 'top' }}
                 />
@@ -248,10 +248,10 @@ const DepartmentPage = () => {
                         </div>
                         <span className="block mt-2 md:mt-0 p-input-icon-left">
                             <i className="pi pi-search" />
-                            <InputText 
-                                type="search" 
-                                onInput={(e) => setGlobalFilter(e.currentTarget.value)} 
-                                placeholder="ຄົ້ນຫາ..." 
+                            <InputText
+                                type="search"
+                                onInput={(e) => setGlobalFilter(e.currentTarget.value)}
+                                placeholder="ຄົ້ນຫາ..."
                             />
                         </span>
                     </div>
@@ -274,35 +274,35 @@ const DepartmentPage = () => {
                         showGridlines
                         responsiveLayout="scroll"
                     >
-                        <Column 
-                            field="code" 
-                            header="ລະຫັດ" 
-                            sortable 
-                            body={codeBodyTemplate} 
+                        <Column
+                            field="code"
+                            header="ລະຫັດ"
+                            sortable
+                            body={codeBodyTemplate}
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
-                        <Column 
-                            field="name" 
-                            header="ຊື່ຝ່າຍ" 
-                            sortable 
-                            body={departmentBodyTemplate} 
+                        <Column
+                            field="name"
+                            header="ຊື່ຝ່າຍ"
+                            sortable
+                            body={departmentBodyTemplate}
                             headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
                         ></Column>
-                        <Column 
-                            body={actionBodyTemplate} 
-                            header="ຈັດການ" 
+                        <Column
+                            body={actionBodyTemplate}
+                            header="ຈັດການ"
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
                     </DataTable>
 
                     {/* Create/Edit Dialog */}
-                    <Dialog 
-                        visible={departmentDialog} 
-                        style={{ width: '450px' }} 
-                        header="ລາຍລະອຽດຝ່າຍ" 
-                        modal 
-                        className="p-fluid" 
-                        footer={departmentDialogFooter} 
+                    <Dialog
+                        visible={departmentDialog}
+                        style={{ width: '450px' }}
+                        header="ລາຍລະອຽດຝ່າຍ"
+                        modal
+                        className="p-fluid"
+                        footer={departmentDialogFooter}
                         onHide={hideDialog}
                     >
                         <div className="field">
@@ -325,16 +325,16 @@ const DepartmentPage = () => {
                             )}
                         </div>
 
-                        
+
                     </Dialog>
 
                     {/* Delete Single Dialog */}
-                    <Dialog 
-                        visible={deleteDepartmentDialog} 
-                        style={{ width: '450px' }} 
-                        header="ການຢືນຢັນ" 
-                        modal 
-                        footer={deleteDepartmentDialogFooter} 
+                    <Dialog
+                        visible={deleteDepartmentDialog}
+                        style={{ width: '450px' }}
+                        header="ການຢືນຢັນ"
+                        modal
+                        footer={deleteDepartmentDialogFooter}
                         onHide={hideDeleteDepartmentDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
@@ -348,12 +348,12 @@ const DepartmentPage = () => {
                     </Dialog>
 
                     {/* Delete Multiple Dialog */}
-                    <Dialog 
-                        visible={deleteDepartmentsDialog} 
-                        style={{ width: '450px' }} 
-                        header="ການຢືນຢັນ" 
-                        modal 
-                        footer={deleteDepartmentsDialogFooter} 
+                    <Dialog
+                        visible={deleteDepartmentsDialog}
+                        style={{ width: '450px' }}
+                        header="ການຢືນຢັນ"
+                        modal
+                        footer={deleteDepartmentsDialogFooter}
                         onHide={hideDeleteDepartmentsDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
@@ -369,4 +369,4 @@ const DepartmentPage = () => {
     );
 };
 
-export default DepartmentPage;
+export default SettingDepartment;

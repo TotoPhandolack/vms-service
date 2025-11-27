@@ -19,7 +19,7 @@ interface CombinedData extends Demo.Product {
 }
 
 /* Updated component for Car Generation Management */
-const CarGenerationPage = () => {
+const AddCarUser = () => {
     let emptyGeneration: Demo.Product = {
         id: '',
         name: '',
@@ -871,4 +871,4 @@ const CarGenerationPage = () => {
     );
 };
 
-export default CarGenerationPage;
+export default AddCarUser;

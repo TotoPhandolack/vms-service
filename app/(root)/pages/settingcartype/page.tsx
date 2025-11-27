@@ -10,7 +10,7 @@ import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { useCarTypeStore, CarType } from '@/app/store/car_type/carTypeStore';
 
-const Crud = () => {
+const SettingCarType = () => {
     let emptyCarType: CarType = {
         ct_id: 0,
         car_type: ''
@@ -255,4 +255,4 @@ const Crud = () => {
     );
 };
 
-export default Crud;
+export default SettingCarType;

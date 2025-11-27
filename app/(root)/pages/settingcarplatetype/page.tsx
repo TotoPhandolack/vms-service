@@ -12,7 +12,7 @@ import { ProductService } from '../../../../demo/service/ProductService';
 import { Demo } from '@/types';
 
 /* @todo Used 'as any' for types here. Will fix in next version due to onSelectionChange event type issue. */
-const Crud = () => {
+const SettingCarPlateType = () => {
     let emptyProduct: Demo.Product = {
         id: '',
         name: '',
@@ -294,4 +294,4 @@ const Crud = () => {
     );
 };
 
-export default Crud;
+export default SettingCarPlateType;

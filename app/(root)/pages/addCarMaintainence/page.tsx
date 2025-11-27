@@ -18,7 +18,7 @@ interface CombinedData extends Demo.Product {
     generationName?: string;
 }
 
-const AddCarDisplay = () => {
+const AddCarMainTainence = () => {
     let emptyGeneration: Demo.Product = {
         id: '',
         name: '',
@@ -46,6 +46,7 @@ const AddCarDisplay = () => {
     const [globalFilter, setGlobalFilter] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [expandedRows, setExpandedRows] = useState<any>(null);
     const toast = useRef<Toast>(null);
     const dt = useRef<DataTable<any>>(null);
 
@@ -339,6 +340,59 @@ const AddCarDisplay = () => {
         );
     };
 
+    // Expandable Row Template
+    const rowExpansionTemplate = (data: CombinedData) => {
+        return (
+            <div className="p-3">
+                <h5 className="mb-3 text-blue-800">ລາຍລະອຽດການສ້ອມແປງ</h5>
+                <div className="grid">
+                    <div className="col-12 md:col-6 lg:col-4">
+                        <div className="mb-3">
+                            <span className="font-bold text-gray-700">ລາຍການສ້ອມແປງ:</span>
+                            <p className="mt-1 text-gray-900">{data.generationName || '-'}</p>
+                        </div>
+                    </div>
+                    <div className="col-12 md:col-6 lg:col-4">
+                        <div className="mb-3">
+                            <span className="font-bold text-gray-700">ຮ້ານສ້ອມແປງ:</span>
+                            <p className="mt-1 text-gray-900">{data.category || '-'}</p>
+                        </div>
+                    </div>
+                    <div className="col-12 md:col-6 lg:col-4">
+                        <div className="mb-3">
+                            <span className="font-bold text-gray-700">ໄລຍະຮັບປະກັນ:</span>
+                            <p className="mt-1 text-gray-900">{data.category || '-'}</p>
+                        </div>
+                    </div>
+                    <div className="col-12 md:col-6 lg:col-4">
+                        <div className="mb-3">
+                            <span className="font-bold text-gray-700">ເລກກົງເຕີຄັ້ງກ່ອນ:</span>
+                            <p className="mt-1 text-gray-900">{data.quantity || '-'}</p>
+                        </div>
+                    </div>
+                    <div className="col-12 md:col-6 lg:col-4">
+                        <div className="mb-3">
+                            <span className="font-bold text-gray-700">ເລກກົງເຕີຄັ້ງນີ້:</span>
+                            <p className="mt-1 text-gray-900">{data.quantity || '-'}</p>
+                        </div>
+                    </div>
+                    <div className="col-12 md:col-6 lg:col-4">
+                        <div className="mb-3">
+                            <span className="font-bold text-gray-700">ເລກທີ່ອະນຸມັດ:</span>
+                            <p className="mt-1 text-gray-900">{data.code || '-'}</p>
+                        </div>
+                    </div>
+                    <div className="col-12 md:col-6 lg:col-4">
+                        <div className="mb-3">
+                            <span className="font-bold text-gray-700">ພະນັກງານໄປແປງ:</span>
+                            <p className="mt-1 text-gray-900">{data.description || '-'}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     const generationDialogFooter = (
         <>
             <Button
@@ -413,7 +467,7 @@ const AddCarDisplay = () => {
 
                     {/* Title */}
                     <div className="flex justify-content-center pb-4 mb-3 border-bottom-1 border-gray-200">
-                        <h1 className="m-0 text-blue-800">ຂໍ້ມູນລົດ</h1>
+                        <h1 className="m-0 text-blue-800">ຂໍ້ມູນສ້ອມແປງລົດ</h1>
                     </div>
 
                     {/* Toolbar */}
@@ -462,10 +516,13 @@ const AddCarDisplay = () => {
 
 
 
-                    {/* DataTable - แสดงข้อมูลรวมจาก departments และ generations */}
+                    {/* DataTable - ແບບ Expandable Row ແສດงຂໍ້ມູນສຳຄັນໃນແຖວຫຼັກ */}
                     <DataTable
                         ref={dt}
                         value={combinedData}
+                        expandedRows={expandedRows}
+                        onRowToggle={(e) => setExpandedRows(e.data)}
+                        rowExpansionTemplate={rowExpansionTemplate}
                         selection={selectedGenerations}
                         onSelectionChange={(e) => setSelectedGenerations(e.value as CombinedData[])}
                         dataKey="id"
@@ -480,56 +537,41 @@ const AddCarDisplay = () => {
                         showGridlines
                         responsiveLayout="scroll"
                     >
+                        <Column expander={true} style={{ width: '5rem' }} />
                         <Column
                             field="code"
                             header="ລະຫັດ"
                             sortable
                             body={codeBodyTemplate}
-                            headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
+                            headerStyle={{ minWidth: '8rem', fontSize: '1.5rem' }}
                         ></Column>
                         <Column
                             field="name"
                             header="ປ້າຍທະບຽນ"
                             sortable
                             body={nameBodyTemplate}
-                            headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
+                            headerStyle={{ minWidth: '12rem', fontSize: '1.5rem' }}
                         ></Column>
-                        {/* Column สำหรับแสดง departments */}
                         <Column
                             field="departmentName"
-                            header="ປະເພດ"
+                            header="ປະເພດການສ້ອມແປງ"
                             sortable
                             body={departmentBodyTemplate}
                             headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
                         ></Column>
-                        {/* Column สำหรับแสดง generations */}
                         <Column
-                            field="generationName"
-                            header="ແຮງຈັກ"
+                            field="price"
+                            header="ມູນຄ່າສ້ອມແປງ"
                             sortable
-                            body={generationBodyTemplate}
-                            headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
+                            body={categoryBodyTemplate}
+                            headerStyle={{ minWidth: '12rem', fontSize: '1.5rem' }}
                         ></Column>
                         <Column
                             field="category"
-                            header="ປີນຳໃຊ້"
+                            header="ວັນສ້ອມແປງ"
                             sortable
                             body={categoryBodyTemplate}
-                            headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
-                        ></Column>
-                        <Column
-                            field="category"
-                            header="ພາກສ່ວນນຳໃຊ້"
-                            sortable
-                            body={categoryBodyTemplate}
-                            headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
-                        ></Column>
-                        <Column
-                            field="category"
-                            header="ປະເພດເຊົ່າລົດ"
-                            sortable
-                            body={categoryBodyTemplate}
-                            headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
+                            headerStyle={{ minWidth: '12rem', fontSize: '1.5rem' }}
                         ></Column>
                         <Column
                             body={actionBodyTemplate}
@@ -940,4 +982,4 @@ const AddCarDisplay = () => {
     );
 };
 
-export default AddCarDisplay;
+export default AddCarMainTainence;

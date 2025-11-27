@@ -130,7 +130,7 @@ const AppMenu = () => {
                 {
                     label: 'ຂໍ້ມູນສ້ອມແປງລົດ',
                     icon: FaTools,
-                    to: '/pages/vehicle-maintenance'
+                    to: '/pages/addCarMaintainence'
                 },
                 {
                     label: 'ກວດວັນໝົດອາຍຸລົດ',

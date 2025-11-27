@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Demo } from '@/types';
 
 /* Updated component for Car Generation Management */
-const CarGenerationPage = () => {
+const SettingCarGeneration = () => {
     let emptyGeneration: Demo.Product = {
         id: '',
         name: '',
@@ -77,7 +77,7 @@ const CarGenerationPage = () => {
         if (generation.name.trim() && generation.category) {
             let _generations = [...generations];
             let _generation = { ...generation };
-            
+
             if (generation.id) {
                 // Update existing generation
                 const index = findIndexById(generation.id);
@@ -214,20 +214,20 @@ const CarGenerationPage = () => {
     const actionBodyTemplate = (rowData: Demo.Product) => {
         return (
             <>
-                <Button 
-                    icon="pi pi-pencil" 
-                    rounded 
-                    severity="success" 
-                    className="mr-2" 
-                    onClick={() => editGeneration(rowData)} 
+                <Button
+                    icon="pi pi-pencil"
+                    rounded
+                    severity="success"
+                    className="mr-2"
+                    onClick={() => editGeneration(rowData)}
                     tooltip="ແກ້ໄຂ"
                     tooltipOptions={{ position: 'top' }}
                 />
-                <Button 
-                    icon="pi pi-trash" 
-                    rounded 
-                    severity="warning" 
-                    onClick={() => confirmDeleteGeneration(rowData)} 
+                <Button
+                    icon="pi pi-trash"
+                    rounded
+                    severity="warning"
+                    onClick={() => confirmDeleteGeneration(rowData)}
                     tooltip="ລົບ"
                     tooltipOptions={{ position: 'top' }}
                 />
@@ -275,10 +275,10 @@ const CarGenerationPage = () => {
                         </div>
                         <span className="block mt-2 md:mt-0 p-input-icon-left">
                             <i className="pi pi-search" />
-                            <InputText 
-                                type="search" 
-                                onInput={(e) => setGlobalFilter(e.currentTarget.value)} 
-                                placeholder="ຄົ້ນຫາ..." 
+                            <InputText
+                                type="search"
+                                onInput={(e) => setGlobalFilter(e.currentTarget.value)}
+                                placeholder="ຄົ້ນຫາ..."
                             />
                         </span>
                     </div>
@@ -301,42 +301,42 @@ const CarGenerationPage = () => {
                         showGridlines
                         responsiveLayout="scroll"
                     >
-                        <Column 
-                            field="code" 
-                            header="ລະຫັດ" 
-                            sortable 
-                            body={codeBodyTemplate} 
+                        <Column
+                            field="code"
+                            header="ລະຫັດ"
+                            sortable
+                            body={codeBodyTemplate}
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
-                        <Column 
-                            field="category" 
-                            header="ຍີ່ຫໍ້ລົດ" 
-                            sortable 
-                            body={categoryBodyTemplate} 
+                        <Column
+                            field="category"
+                            header="ຍີ່ຫໍ້ລົດ"
+                            sortable
+                            body={categoryBodyTemplate}
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
-                        <Column 
-                            field="name" 
-                            header="ລຸ້ນລົດ" 
-                            sortable 
-                            body={generationBodyTemplate} 
+                        <Column
+                            field="name"
+                            header="ລຸ້ນລົດ"
+                            sortable
+                            body={generationBodyTemplate}
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
-                        <Column 
-                            body={actionBodyTemplate} 
-                            header="ຈັດການ" 
+                        <Column
+                            body={actionBodyTemplate}
+                            header="ຈັດການ"
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
                     </DataTable>
 
                     {/* Create/Edit Dialog */}
-                    <Dialog 
-                        visible={generationDialog} 
-                        style={{ width: '450px' }} 
-                        header="ລາຍລະອຽດຂໍ້ມູນລຸ້ນລົດ" 
-                        modal 
-                        className="p-fluid" 
-                        footer={generationDialogFooter} 
+                    <Dialog
+                        visible={generationDialog}
+                        style={{ width: '450px' }}
+                        header="ລາຍລະອຽດຂໍ້ມູນລຸ້ນລົດ"
+                        modal
+                        className="p-fluid"
+                        footer={generationDialogFooter}
                         onHide={hideDialog}
                     >
                         <div className="field">
@@ -385,12 +385,12 @@ const CarGenerationPage = () => {
                     </Dialog>
 
                     {/* Delete Single Dialog */}
-                    <Dialog 
-                        visible={deleteGenerationDialog} 
-                        style={{ width: '450px' }} 
-                        header="ການຢືນຢັນ" 
-                        modal 
-                        footer={deleteGenerationDialogFooter} 
+                    <Dialog
+                        visible={deleteGenerationDialog}
+                        style={{ width: '450px' }}
+                        header="ການຢືນຢັນ"
+                        modal
+                        footer={deleteGenerationDialogFooter}
                         onHide={hideDeleteGenerationDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
@@ -404,12 +404,12 @@ const CarGenerationPage = () => {
                     </Dialog>
 
                     {/* Delete Multiple Dialog */}
-                    <Dialog 
-                        visible={deleteGenerationsDialog} 
-                        style={{ width: '450px' }} 
-                        header="ການຢືນຢັນ" 
-                        modal 
-                        footer={deleteGenerationsDialogFooter} 
+                    <Dialog
+                        visible={deleteGenerationsDialog}
+                        style={{ width: '450px' }}
+                        header="ການຢືນຢັນ"
+                        modal
+                        footer={deleteGenerationsDialogFooter}
                         onHide={hideDeleteGenerationsDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
@@ -425,4 +425,4 @@ const CarGenerationPage = () => {
     );
 };
 
-export default CarGenerationPage;
+export default SettingCarGeneration;

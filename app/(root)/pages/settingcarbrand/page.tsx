@@ -11,7 +11,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Demo } from '@/types';
 
 /* Car Brand Management Page - Connected to brands.json */
-const CarBrandPage = () => {
+const SettingCarBrand = () => {
     let emptyBrand: Demo.Product = {
         id: '',
         name: '',
@@ -68,7 +68,7 @@ const CarBrandPage = () => {
         if (brand.name.trim()) {
             let _brands = [...brands];
             let _brand = { ...brand };
-            
+
             if (brand.id) {
                 // Update existing brand
                 const index = findIndexById(brand.id);
@@ -187,20 +187,20 @@ const CarBrandPage = () => {
     const actionBodyTemplate = (rowData: Demo.Product) => {
         return (
             <>
-                <Button 
-                    icon="pi pi-pencil" 
-                    rounded 
-                    severity="success" 
-                    className="mr-2" 
-                    onClick={() => editBrand(rowData)} 
+                <Button
+                    icon="pi pi-pencil"
+                    rounded
+                    severity="success"
+                    className="mr-2"
+                    onClick={() => editBrand(rowData)}
                     tooltip="ແກ້ໄຂ"
                     tooltipOptions={{ position: 'top' }}
                 />
-                <Button 
-                    icon="pi pi-trash" 
-                    rounded 
-                    severity="warning" 
-                    onClick={() => confirmDeleteBrand(rowData)} 
+                <Button
+                    icon="pi pi-trash"
+                    rounded
+                    severity="warning"
+                    onClick={() => confirmDeleteBrand(rowData)}
                     tooltip="ລົບ"
                     tooltipOptions={{ position: 'top' }}
                 />
@@ -248,10 +248,10 @@ const CarBrandPage = () => {
                         </div>
                         <span className="block mt-2 md:mt-0 p-input-icon-left">
                             <i className="pi pi-search" />
-                            <InputText 
-                                type="search" 
-                                onInput={(e) => setGlobalFilter(e.currentTarget.value)} 
-                                placeholder="ຄົ້ນຫາ..." 
+                            <InputText
+                                type="search"
+                                onInput={(e) => setGlobalFilter(e.currentTarget.value)}
+                                placeholder="ຄົ້ນຫາ..."
                             />
                         </span>
                     </div>
@@ -274,35 +274,35 @@ const CarBrandPage = () => {
                         showGridlines
                         responsiveLayout="scroll"
                     >
-                        <Column 
-                            field="code" 
-                            header="ລະຫັດ" 
-                            sortable 
-                            body={codeBodyTemplate} 
+                        <Column
+                            field="code"
+                            header="ລະຫັດ"
+                            sortable
+                            body={codeBodyTemplate}
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
-                        <Column 
-                            field="name" 
-                            header="ຍີ່ຫໍ້ລົດ" 
-                            sortable 
-                            body={brandBodyTemplate} 
+                        <Column
+                            field="name"
+                            header="ຍີ່ຫໍ້ລົດ"
+                            sortable
+                            body={brandBodyTemplate}
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
-                        <Column 
-                            body={actionBodyTemplate} 
-                            header="ຈັດການ" 
+                        <Column
+                            body={actionBodyTemplate}
+                            header="ຈັດການ"
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
                     </DataTable>
 
                     {/* Create/Edit Dialog */}
-                    <Dialog 
-                        visible={brandDialog} 
-                        style={{ width: '450px' }} 
-                        header="ລາຍລະອຽດຂໍ້ມູນຍີ່ຫໍ້ລົດ" 
-                        modal 
-                        className="p-fluid" 
-                        footer={brandDialogFooter} 
+                    <Dialog
+                        visible={brandDialog}
+                        style={{ width: '450px' }}
+                        header="ລາຍລະອຽດຂໍ້ມູນຍີ່ຫໍ້ລົດ"
+                        modal
+                        className="p-fluid"
+                        footer={brandDialogFooter}
                         onHide={hideDialog}
                     >
                         <div className="field">
@@ -328,12 +328,12 @@ const CarBrandPage = () => {
                     </Dialog>
 
                     {/* Delete Single Dialog */}
-                    <Dialog 
-                        visible={deleteBrandDialog} 
-                        style={{ width: '450px' }} 
-                        header="ການຢືນຢັນ" 
-                        modal 
-                        footer={deleteBrandDialogFooter} 
+                    <Dialog
+                        visible={deleteBrandDialog}
+                        style={{ width: '450px' }}
+                        header="ການຢືນຢັນ"
+                        modal
+                        footer={deleteBrandDialogFooter}
                         onHide={hideDeleteBrandDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
@@ -347,12 +347,12 @@ const CarBrandPage = () => {
                     </Dialog>
 
                     {/* Delete Multiple Dialog */}
-                    <Dialog 
-                        visible={deleteBrandsDialog} 
-                        style={{ width: '450px' }} 
-                        header="ການຢືນຢັນ" 
-                        modal 
-                        footer={deleteBrandsDialogFooter} 
+                    <Dialog
+                        visible={deleteBrandsDialog}
+                        style={{ width: '450px' }}
+                        header="ການຢືນຢັນ"
+                        modal
+                        footer={deleteBrandsDialogFooter}
                         onHide={hideDeleteBrandsDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
@@ -368,4 +368,4 @@ const CarBrandPage = () => {
     );
 };
 
-export default CarBrandPage;
+export default SettingCarBrand;

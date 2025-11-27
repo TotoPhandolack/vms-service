@@ -19,7 +19,7 @@ interface CombinedData extends Demo.Product {
 }
 
 /* Updated component for Car Generation Management */
-const CarGenerationPage = () => {
+const SettingUsers = () => {
     let emptyGeneration: Demo.Product = {
         id: '',
         name: '',
@@ -89,7 +89,7 @@ const CarGenerationPage = () => {
         setSubmitted(false);
         setGenerationDialog(true);
     };
- 
+
     const hideDialog = () => {
         setSubmitted(false);
         setGenerationDialog(false);
@@ -148,7 +148,7 @@ const CarGenerationPage = () => {
         if (generation.name.trim() && generation.category) {
             let _generations = [...generations];
             let _generation = { ...generation };
-            
+
             if (generation.id) {
                 // Update existing generation
                 const index = findIndexById(generation.id);
@@ -304,29 +304,29 @@ const CarGenerationPage = () => {
         return (
             <>
 
-                <Button 
-                    icon="pi pi-key" 
-                    rounded 
-                    severity="warning" 
-                    className="mr-2" 
+                <Button
+                    icon="pi pi-key"
+                    rounded
+                    severity="warning"
+                    className="mr-2"
                     onClick={() => openChangePasswordDialog(rowData)}
                     tooltip="ປ່ຽນລະຫັດຜ່ານ"
                     tooltipOptions={{ position: 'top' }}
                 />
 
-                <Button 
-                    icon="pi pi-pencil" 
-                    rounded 
-                    severity="success" 
-                    className="mr-2" 
-                    onClick={() => editGeneration(rowData)} 
+                <Button
+                    icon="pi pi-pencil"
+                    rounded
+                    severity="success"
+                    className="mr-2"
+                    onClick={() => editGeneration(rowData)}
                 />
-                
-                <Button 
-                    icon="pi pi-trash" 
-                    rounded 
-                    severity="danger" 
-                    onClick={() => confirmDeleteGeneration(rowData)} 
+
+                <Button
+                    icon="pi pi-trash"
+                    rounded
+                    severity="danger"
+                    onClick={() => confirmDeleteGeneration(rowData)}
                 />
             </>
         );
@@ -334,66 +334,66 @@ const CarGenerationPage = () => {
 
     const generationDialogFooter = (
         <>
-            <Button 
-                label="ຍົກເລີກ" 
-                icon="pi pi-times" 
-                text 
-                onClick={hideDialog} 
+            <Button
+                label="ຍົກເລີກ"
+                icon="pi pi-times"
+                text
+                onClick={hideDialog}
             />
-            <Button 
-                label="ບັນທຶກ" 
-                icon="pi pi-check" 
-                onClick={saveGeneration} 
+            <Button
+                label="ບັນທຶກ"
+                icon="pi pi-check"
+                onClick={saveGeneration}
             />
         </>
     );
 
     const deleteGenerationDialogFooter = (
         <>
-            <Button 
-                label="ບໍ່" 
-                icon="pi pi-times" 
-                text 
-                onClick={hideDeleteGenerationDialog} 
+            <Button
+                label="ບໍ່"
+                icon="pi pi-times"
+                text
+                onClick={hideDeleteGenerationDialog}
             />
-            <Button 
-                label="ແມ່ນ" 
-                icon="pi pi-check" 
-                severity="danger" 
-                onClick={deleteGeneration} 
+            <Button
+                label="ແມ່ນ"
+                icon="pi pi-check"
+                severity="danger"
+                onClick={deleteGeneration}
             />
         </>
     );
 
     const deleteGenerationsDialogFooter = (
         <>
-            <Button 
-                label="ບໍ່" 
-                icon="pi pi-times" 
-                text 
-                onClick={hideDeleteGenerationsDialog} 
+            <Button
+                label="ບໍ່"
+                icon="pi pi-times"
+                text
+                onClick={hideDeleteGenerationsDialog}
             />
-            <Button 
-                label="ແມ່ນ" 
-                icon="pi pi-check" 
-                severity="danger" 
-                onClick={deleteSelectedGenerations} 
+            <Button
+                label="ແມ່ນ"
+                icon="pi pi-check"
+                severity="danger"
+                onClick={deleteSelectedGenerations}
             />
         </>
     );
 
     const changePasswordDialogFooter = (
         <>
-            <Button 
-                label="ຍົກເລີກ" 
-                icon="pi pi-times" 
-                text 
-                onClick={hideChangePasswordDialog} 
+            <Button
+                label="ຍົກເລີກ"
+                icon="pi pi-times"
+                text
+                onClick={hideChangePasswordDialog}
             />
-            <Button 
-                label="ບັນທຶກ" 
-                icon="pi pi-check" 
-                onClick={saveChangePassword} 
+            <Button
+                label="ບັນທຶກ"
+                icon="pi pi-check"
+                onClick={saveChangePassword}
             />
         </>
     );
@@ -416,10 +416,10 @@ const CarGenerationPage = () => {
                         </div>
                         <span className="block mt-2 md:mt-0 p-input-icon-left">
                             <i className="pi pi-search" />
-                            <InputText 
-                                type="search" 
-                                onInput={(e) => setGlobalFilter(e.currentTarget.value)} 
-                                placeholder="ຄົ້ນຫາ..." 
+                            <InputText
+                                type="search"
+                                onInput={(e) => setGlobalFilter(e.currentTarget.value)}
+                                placeholder="ຄົ້ນຫາ..."
                             />
                         </span>
                     </div>
@@ -442,58 +442,58 @@ const CarGenerationPage = () => {
                         showGridlines
                         responsiveLayout="scroll"
                     >
-                        <Column 
-                            field="code" 
-                            header="ລະຫັດ" 
-                            sortable 
-                            body={codeBodyTemplate} 
+                        <Column
+                            field="code"
+                            header="ລະຫັດ"
+                            sortable
+                            body={codeBodyTemplate}
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
-                        <Column 
-                            field="name" 
-                            header="ຊື່" 
-                            sortable 
-                            body={nameBodyTemplate} 
+                        <Column
+                            field="name"
+                            header="ຊື່"
+                            sortable
+                            body={nameBodyTemplate}
                             headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
                         ></Column>
                         {/* Column สำหรับแสดง departments */}
-                        <Column 
-                            field="departmentName" 
-                            header="ພະແນກ" 
-                            sortable 
-                            body={departmentBodyTemplate} 
+                        <Column
+                            field="departmentName"
+                            header="ພະແນກ"
+                            sortable
+                            body={departmentBodyTemplate}
                             headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
                         ></Column>
                         {/* Column สำหรับแสดง generations */}
-                        <Column 
-                            field="generationName" 
-                            header="ຝ່າຍ" 
-                            sortable 
-                            body={generationBodyTemplate} 
+                        <Column
+                            field="generationName"
+                            header="ຝ່າຍ"
+                            sortable
+                            body={generationBodyTemplate}
                             headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
                         ></Column>
-                        <Column 
-                            field="category" 
-                            header="ປະເພດ" 
-                            sortable 
-                            body={categoryBodyTemplate} 
+                        <Column
+                            field="category"
+                            header="ປະເພດ"
+                            sortable
+                            body={categoryBodyTemplate}
                             headerStyle={{ minWidth: '15rem', fontSize: '1.5rem' }}
                         ></Column>
-                        <Column 
-                            body={actionBodyTemplate} 
-                            header="ຈັດການ" 
+                        <Column
+                            body={actionBodyTemplate}
+                            header="ຈັດການ"
                             headerStyle={{ minWidth: '10rem', fontSize: '1.5rem' }}
                         ></Column>
                     </DataTable>
 
                     {/* Create/Edit Dialog */}
-                    <Dialog 
-                        visible={generationDialog} 
-                        style={{ width: '450px' }} 
-                        header="ລາຍລະອຽດຂໍ້ມູນພະແນກ/ສາຂາ" 
-                        modal 
-                        className="p-fluid" 
-                        footer={generationDialogFooter} 
+                    <Dialog
+                        visible={generationDialog}
+                        style={{ width: '450px' }}
+                        header="ລາຍລະອຽດຂໍ້ມູນພະແນກ/ສາຂາ"
+                        modal
+                        className="p-fluid"
+                        footer={generationDialogFooter}
                         onHide={hideDialog}
                     >
                         <div className="field">
@@ -556,7 +556,7 @@ const CarGenerationPage = () => {
                                 <small className="p-invalid text-red-500">ກະລຸນາປ້ອນອີເມວ</small>
                             )}
                         </div>
-                        
+
                         <div className="field">
                             <label htmlFor="name" className="font-bold">
                                 ລະຫັດຜ່ານ <span className="text-red-500">*</span>
@@ -601,12 +601,12 @@ const CarGenerationPage = () => {
                     </Dialog>
 
                     {/* Delete Single Dialog */}
-                    <Dialog 
-                        visible={deleteGenerationDialog} 
-                        style={{ width: '450px' }} 
-                        header="ການຢືນຢັນ" 
-                        modal 
-                        footer={deleteGenerationDialogFooter} 
+                    <Dialog
+                        visible={deleteGenerationDialog}
+                        style={{ width: '450px' }}
+                        header="ການຢືນຢັນ"
+                        modal
+                        footer={deleteGenerationDialogFooter}
                         onHide={hideDeleteGenerationDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
@@ -620,12 +620,12 @@ const CarGenerationPage = () => {
                     </Dialog>
 
                     {/* Delete Multiple Dialog */}
-                    <Dialog 
-                        visible={deleteGenerationsDialog} 
-                        style={{ width: '450px' }} 
-                        header="ການຢືນຢັນ" 
-                        modal 
-                        footer={deleteGenerationsDialogFooter} 
+                    <Dialog
+                        visible={deleteGenerationsDialog}
+                        style={{ width: '450px' }}
+                        header="ການຢືນຢັນ"
+                        modal
+                        footer={deleteGenerationsDialogFooter}
                         onHide={hideDeleteGenerationsDialog}
                     >
                         <div className="flex align-items-center justify-content-center">
@@ -637,13 +637,13 @@ const CarGenerationPage = () => {
                     </Dialog>
 
                     {/* Change Password Dialog */}
-                    <Dialog 
-                        visible={changePasswordDialog} 
-                        style={{ width: '450px' }} 
-                        header="ປ່ຽນລະຫັດຜ່ານ" 
-                        modal 
-                        className="p-fluid" 
-                        footer={changePasswordDialogFooter} 
+                    <Dialog
+                        visible={changePasswordDialog}
+                        style={{ width: '450px' }}
+                        header="ປ່ຽນລະຫັດຜ່ານ"
+                        modal
+                        className="p-fluid"
+                        footer={changePasswordDialogFooter}
                         onHide={hideChangePasswordDialog}
                     >
 
@@ -696,4 +696,4 @@ const CarGenerationPage = () => {
     );
 };
 
-export default CarGenerationPage;
+export default SettingUsers;
