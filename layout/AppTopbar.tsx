@@ -7,6 +7,8 @@ import { AppTopbarRef } from '@/types';
 import { LayoutContext } from './context/layoutcontext';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { authenStore } from '@/app/store/user/loginAuthStore';
+import { Menu } from 'primereact/menu';
+import { Badge } from 'primereact/badge';
 
 
 const AppTopbar = forwardRef<AppTopbarRef>((_props, ref) => {
@@ -14,6 +16,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((_props, ref) => {
     const menubuttonRef = useRef(null);
     const topbarmenuRef = useRef(null);
     const topbarmenubuttonRef = useRef(null);
+    const profileMenuRef = useRef<Menu>(null);
 
     useImperativeHandle(ref, () => ({
         menubutton: menubuttonRef.current,
@@ -42,6 +45,46 @@ const AppTopbar = forwardRef<AppTopbarRef>((_props, ref) => {
 
     const firstInitial = getFirstInitial(authData?.user?.fullname || '')
 
+    const profileMenuItems = [
+        {
+            template: () => {
+                return (
+                    <div className="p-3 border-bottom-1 surface-border ">
+                        <div className="font-bold text-lg mb-2">{authData?.user?.fullname || 'User'}</div>
+                        <div className="flex flex-column gap-1">
+                            <div className="text-sm">
+                                <span className="text-color-secondary">ຕຳແໜ່ງ: </span>
+                                <span className="font-medium">{authData?.user?.position_name || '-'}</span>
+                            </div>
+                            <div className="text-sm">
+                                <span className="text-color-secondary">ພະແນກ: </span>
+                                <span className="font-medium">{authData?.user?.department_name || '-'}</span>
+                            </div>
+                            <div className="text-sm">
+                                <span className="text-color-secondary">ສະຖານະ: </span>
+                                <Badge value={authData?.user?.role || 'User'} severity="info" />
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        },
+        {
+            separator: true
+        },
+
+        {
+            separator: true
+        },
+        {
+            label: 'ອອກຈາກລະບົບ',
+            icon: 'pi pi-sign-out',
+            command: () => {
+                // Add your logout logic here
+                console.log('Logout');
+            }
+        }
+    ];
 
     return (
         <div className="layout-topbar">
@@ -59,7 +102,11 @@ const AppTopbar = forwardRef<AppTopbarRef>((_props, ref) => {
             </button>
 
             <div ref={topbarmenuRef} className={classNames('layout-topbar-menu', { 'layout-topbar-menu-mobile-active': layoutState.profileSidebarVisible })}>
-                <div className="profile-icon-circle">
+                <Menu className='mt-2 mr-3' model={profileMenuItems} popup ref={profileMenuRef} />
+                <div
+                    className="profile-icon-circle cursor-pointer"
+                    onClick={(e) => profileMenuRef.current?.toggle(e)}
+                >
                     {firstInitial}
                 </div>
             </div>

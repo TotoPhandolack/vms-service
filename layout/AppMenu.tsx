@@ -171,8 +171,10 @@ const AppMenu = () => {
                     </div>
                     <div className="sidebar-user-details">
                         <div className="sidebar-username">{authData?.user?.fullname || 'User'}</div>
-                        <div className="sidebar-status">ສະຖານະ: <span className='font-bold text-white'>
+                        <div className="sidebar-status">ຕຳແໜ່ງ: <span className='font-bold text-white'>
                             {authData?.user?.position_name}</span></div>
+                        <div className="sidebar-status">ສະຖານະ: <span className='font-bold text-white'>
+                            {authData?.user?.role}</span></div>
                     </div>
                 </div>
                 <button
