@@ -97,14 +97,6 @@ const AppMenu = () => {
                                     to: '/pages/settingrenttype'
                                 },
                                 {
-                                    label: 'ຂໍ້ມູນຝ່າຍ',
-                                    to: '/pages/settingdepartment'
-                                },
-                                {
-                                    label: 'ຂໍ້ມູນພະແນກ/ຫ້ອງການ/ສາຂາ',
-                                    to: '/pages/settingdivision'
-                                },
-                                {
                                     label: 'ຂໍ້ມູນຜູ້ໃຊ້',
                                     to: '/pages/settingusers'
                                 },
