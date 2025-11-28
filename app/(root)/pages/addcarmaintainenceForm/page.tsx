@@ -50,6 +50,9 @@ const AddCarMaintenanceForm = () => {
         { label: 'ອື່ນໆ', value: 'others' }
     ];
 
+    // Available Maintenance Items (from system)
+
+
     // Generate ID
     const createId = () => {
         return Math.random().toString(36).substring(2, 11);
@@ -183,7 +186,7 @@ const AddCarMaintenanceForm = () => {
 
     // Cancel and Go Back
     const handleCancel = () => {
-        router.push('/pages/addCarMaintainence');
+        router.push('/pages/addcarmaintainence');
     };
 
     // Item Dialog Footer
@@ -261,44 +264,6 @@ const AddCarMaintenanceForm = () => {
                                 </div>
                             </div>
 
-                            {/* ລາຍການສ້ອມແປງ */}
-                            <div className="col-12">
-                                <div className="field">
-                                    <label className="font-bold">
-                                        ລາຍການສ້ອມແປງ <span className="text-red-500">*</span>
-                                    </label>
-                                    <div className="flex align-items-center gap-2 mb-2">
-                                        <Button
-                                            label="ເພີ່ມລາຍການສ້ອມແປງ"
-                                            icon="pi pi-plus"
-                                            onClick={openItemDialog}
-                                            className="p-button-outlined"
-                                        />
-                                    </div>
-
-                                    {/* Display Maintenance Items */}
-                                    {maintenanceItems.length > 0 && (
-                                        <div className="border-1 border-gray-300 border-round p-3">
-                                            {maintenanceItems.map((item, index) => (
-                                                <div key={item.id} className="flex align-items-center justify-content-between p-2 border-bottom-1 border-gray-200">
-                                                    <span>{index + 1}. {item.name}</span>
-                                                    <Button
-                                                        icon="pi pi-trash"
-                                                        rounded
-                                                        text
-                                                        severity="danger"
-                                                        onClick={() => removeMaintenanceItem(item.id)}
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    {submitted && maintenanceItems.length === 0 && (
-                                        <small className="p-invalid text-red-500">ກະລຸນາເພີ່ມລາຍການສ້ອມແປງຢ່າງໜ້ອຍ 1 ລາຍການ</small>
-                                    )}
-                                </div>
-                            </div>
 
                             {/* ມູນຄ່າການສ້ອມແປງ */}
                             <div className="col-12 md:col-6">
@@ -554,6 +519,7 @@ const AddCarMaintenanceForm = () => {
                         footer={itemDialogFooter}
                         onHide={hideItemDialog}
                     >
+
                         <div className="field">
                             <label htmlFor="itemName" className="font-bold">
                                 ຊື່ລາຍການສ້ອມແປງ <span className="text-red-500">*</span>
