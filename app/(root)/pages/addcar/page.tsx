@@ -30,6 +30,11 @@ const AddCarPage: React.FC<AddcarProps> = ({
     const [carBrand, setCarBrand] = useState<string>('')
     const [carGen, setCarGen] = useState<string>('')
     const [submitted, setSubmitted] = useState(false);
+    const [isTab1Completed, setIsTab1Completed] = useState(false);
+    const [isTab2Completed, setIsTab2Completed] = useState(false);
+    const [isTab3Completed, setIsTab3Completed] = useState(false);
+    const [isTab4Completed, setIsTab4Completed] = useState(false);
+    const [isTab5Completed, setIsTab5Completed] = useState(false);
 
 
     const provincesCar = [
@@ -193,6 +198,171 @@ const AddCarPage: React.FC<AddcarProps> = ({
         { label: '1990', value: '1990' },
     ]
 
+    const handleTab1Submit = () => {
+        setSubmitted(true);
+
+        if (
+            plateType.trim() &&
+            carPlateType &&
+            carType &&
+            provinceCar &&
+            carColor.trim() &&
+            carBrand &&
+            carGen
+        ) {
+            toast.current?.show({
+                severity: 'success',
+                summary: 'ສຳເລັດ',
+                detail: 'ບັນທຶກຂໍ້ມູນລົດສຳເລັດ',
+                life: 3000
+            });
+
+            setIsTab1Completed(true);
+            setSubmitted(false);
+            setActiveIndex(1)
+        } else {
+
+            toast.current?.show({
+                severity: 'error',
+                summary: 'ຜິດພາດ',
+                detail: 'ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ',
+                life: 3000
+            });
+        }
+    };
+
+    const handleTab2Submit = () => {
+        setSubmitted(true);
+
+        if (
+            plateType.trim() &&
+            carPlateType &&
+            carType &&
+            provinceCar &&
+            carColor.trim() &&
+            carBrand &&
+            carGen
+        ) {
+            toast.current?.show({
+                severity: 'success',
+                summary: 'ສຳເລັດ',
+                detail: 'ບັນທຶກຂໍ້ມູນລົດສຳເລັດ',
+                life: 3000
+            });
+
+            setIsTab2Completed(true);
+            setSubmitted(false);
+            setActiveIndex(2)
+        } else {
+
+            toast.current?.show({
+                severity: 'error',
+                summary: 'ຜິດພາດ',
+                detail: 'ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ',
+                life: 3000
+            });
+        }
+    };
+
+    const handleTab3Submit = () => {
+        setSubmitted(true);
+
+        if (
+            plateType.trim() &&
+            carPlateType &&
+            carType &&
+            provinceCar &&
+            carColor.trim() &&
+            carBrand &&
+            carGen
+        ) {
+            toast.current?.show({
+                severity: 'success',
+                summary: 'ສຳເລັດ',
+                detail: 'ບັນທຶກຂໍ້ມູນລົດສຳເລັດ',
+                life: 3000
+            });
+
+            setIsTab3Completed(true);
+            setSubmitted(false);
+            setActiveIndex(3)
+        } else {
+
+            toast.current?.show({
+                severity: 'error',
+                summary: 'ຜິດພາດ',
+                detail: 'ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ',
+                life: 3000
+            });
+        }
+    };
+
+    const handleTab4Submit = () => {
+        setSubmitted(true);
+
+        if (
+            plateType.trim() &&
+            carPlateType &&
+            carType &&
+            provinceCar &&
+            carColor.trim() &&
+            carBrand &&
+            carGen
+        ) {
+            toast.current?.show({
+                severity: 'success',
+                summary: 'ສຳເລັດ',
+                detail: 'ບັນທຶກຂໍ້ມູນລົດສຳເລັດ',
+                life: 3000
+            });
+
+            setIsTab4Completed(true);
+            setSubmitted(false);
+            setActiveIndex(4)
+        } else {
+
+            toast.current?.show({
+                severity: 'error',
+                summary: 'ຜິດພາດ',
+                detail: 'ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ',
+                life: 3000
+            });
+        }
+    };
+
+    const handleTab5Submit = () => {
+        setSubmitted(true);
+
+        if (
+            plateType.trim() &&
+            carPlateType &&
+            carType &&
+            provinceCar &&
+            carColor.trim() &&
+            carBrand &&
+            carGen
+        ) {
+            toast.current?.show({
+                severity: 'success',
+                summary: 'ສຳເລັດ',
+                detail: 'ບັນທຶກຂໍ້ມູນລົດສຳເລັດ',
+                life: 3000
+            });
+
+            setIsTab5Completed(true);
+            setSubmitted(false);
+            setActiveIndex(4)
+        } else {
+
+            toast.current?.show({
+                severity: 'error',
+                summary: 'ຜິດພາດ',
+                detail: 'ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ',
+                life: 3000
+            });
+        }
+    };
+
     return (
         <div className="grid">
             <div className="col-12">
@@ -215,7 +385,7 @@ const AddCarPage: React.FC<AddcarProps> = ({
                         }}
                     >
 
-
+                        {/* ຂໍ້ມູນລົດ */}
                         <TabPanel
                             header={
                                 <div
@@ -390,14 +560,16 @@ const AddCarPage: React.FC<AddcarProps> = ({
                                 <Button
                                     label="ບັນທຶກຂໍ້ມູນ"
                                     icon="pi pi-check"
-                                    // onClick={handleSubmit}
+                                    onClick={handleTab1Submit}
                                     className="w-1 bg-blue-800 border-none"
                                 />
                             </div>
 
                         </TabPanel>
 
+                        {/* ຂໍ້ມູນເຄື່ງຈັກລົດ */}
                         <TabPanel
+                            disabled={!isTab1Completed}
                             header={
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <IoMdSpeedometer size={15} />
@@ -405,14 +577,179 @@ const AddCarPage: React.FC<AddcarProps> = ({
                                 </div>
                             }
                         >
-                            <p className="m-0">
-                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
-                                eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
-                                enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-                                ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-                            </p>
+                            <div className="p-fluid">
+                                <div className="grid">
+
+                                    {/* ປ້າຍທະບຽນລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="PlateType" className="font-bold">
+                                                ປ້າຍທະບຽນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <InputText
+                                                id="PlateType"
+                                                value={plateType}
+                                                onChange={(e) => setPlateType(e.target.value)}
+                                                placeholder="ກະລຸນາປ້ອນປ້າຍທະບຽນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !plateType.trim()
+                                                })}
+                                            />
+                                            {submitted && !plateType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນປ້າຍທະບຽນລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ປະເພດທະບຽນລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="carPlateType" className="font-bold">
+                                                ປະເພດທະບຽນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carPlateType"
+                                                value={carPlateType}
+                                                options={carPlateTypes}
+                                                onChange={(e) => setCarPlateType(e.value)}
+                                                placeholder="ປະເພດທະບຽນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carPlateType
+                                                })}
+                                            />
+                                            {submitted && !carPlateType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນແຂວງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ປະເພດລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="carType" className="font-bold">
+                                                ປະເພດລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carType"
+                                                value={carType}
+                                                options={carTypes}
+                                                onChange={(e) => setCarType(e.value)}
+                                                placeholder="ປະເພດລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carType
+                                                })}
+                                            />
+                                            {submitted && !carType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນປະເພດລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ແຂວງລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="provincesCar" className="font-bold">
+                                                ແຂວງລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="provinceCar"
+                                                value={provinceCar}
+                                                options={provincesCar}
+                                                onChange={(e) => setProvinceCar(e.value)}
+                                                placeholder="ແຂວງລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !provinceCar
+                                                })}
+                                            />
+                                            {submitted && !provinceCar.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນແຂວງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ສີຂອງລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carColor" className="font-bold">
+                                                ສີຂອງລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <InputText
+                                                id="carColor"
+                                                value={carColor}
+                                                onChange={(e) => setCarColor(e.target.value)}
+                                                placeholder="ກະລຸນາປ້ອນສີຂອງລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carColor.trim()
+                                                })}
+                                            />
+                                            {submitted && !carColor.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນສີຂອງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ຍີ່ຫໍ້ລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carBrand" className="font-bold">
+                                                ຍີ່ຫໍ້ລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carBrand"
+                                                value={carBrand}
+                                                options={carBrands}
+                                                onChange={(e) => setCarBrand(e.value)}
+                                                placeholder="ຍີ່ຫໍ້ລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carBrand
+                                                })}
+                                            />
+                                            {submitted && !carBrand.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນຍີ່ຫໍ້ລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ລຸ້ນລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carGen" className="font-bold">
+                                                ລຸ້ນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carGen"
+                                                value={carGen}
+                                                options={carGens}
+                                                onChange={(e) => setCarGen(e.value)}
+                                                placeholder="ລຸ້ນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carGen
+                                                })}
+                                            />
+                                            {submitted && !carGen.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນລຸ້ນລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div className="flex justify-content-center gap-2 mt-4">
+                                <Button
+                                    label="ບັນທຶກຂໍ້ມູນ"
+                                    icon="pi pi-check"
+                                    onClick={handleTab2Submit}
+                                    className="w-1 bg-blue-800 border-none"
+                                />
+                            </div>
+
                         </TabPanel>
+
+                        {/* ຂໍ້ມູນເອກະສານລົດ */}
                         <TabPanel
+                            disabled={!isTab1Completed || !isTab2Completed}
                             header={
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <IoDocumentText size={15} />
@@ -420,14 +757,180 @@ const AddCarPage: React.FC<AddcarProps> = ({
                                 </div>
                             }
                         >
-                            <p className="m-0">
-                                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti
-                                quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in
-                                culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-                                Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-                            </p>
+
+                            <div className="p-fluid">
+                                <div className="grid">
+
+                                    {/* ປ້າຍທະບຽນລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="PlateType" className="font-bold">
+                                                ປ້າຍທະບຽນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <InputText
+                                                id="PlateType"
+                                                value={plateType}
+                                                onChange={(e) => setPlateType(e.target.value)}
+                                                placeholder="ກະລຸນາປ້ອນປ້າຍທະບຽນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !plateType.trim()
+                                                })}
+                                            />
+                                            {submitted && !plateType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນປ້າຍທະບຽນລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ປະເພດທະບຽນລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="carPlateType" className="font-bold">
+                                                ປະເພດທະບຽນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carPlateType"
+                                                value={carPlateType}
+                                                options={carPlateTypes}
+                                                onChange={(e) => setCarPlateType(e.value)}
+                                                placeholder="ປະເພດທະບຽນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carPlateType
+                                                })}
+                                            />
+                                            {submitted && !carPlateType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນແຂວງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ປະເພດລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="carType" className="font-bold">
+                                                ປະເພດລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carType"
+                                                value={carType}
+                                                options={carTypes}
+                                                onChange={(e) => setCarType(e.value)}
+                                                placeholder="ປະເພດລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carType
+                                                })}
+                                            />
+                                            {submitted && !carType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນປະເພດລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ແຂວງລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="provincesCar" className="font-bold">
+                                                ແຂວງລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="provinceCar"
+                                                value={provinceCar}
+                                                options={provincesCar}
+                                                onChange={(e) => setProvinceCar(e.value)}
+                                                placeholder="ແຂວງລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !provinceCar
+                                                })}
+                                            />
+                                            {submitted && !provinceCar.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນແຂວງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ສີຂອງລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carColor" className="font-bold">
+                                                ສີຂອງລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <InputText
+                                                id="carColor"
+                                                value={carColor}
+                                                onChange={(e) => setCarColor(e.target.value)}
+                                                placeholder="ກະລຸນາປ້ອນສີຂອງລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carColor.trim()
+                                                })}
+                                            />
+                                            {submitted && !carColor.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນສີຂອງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ຍີ່ຫໍ້ລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carBrand" className="font-bold">
+                                                ຍີ່ຫໍ້ລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carBrand"
+                                                value={carBrand}
+                                                options={carBrands}
+                                                onChange={(e) => setCarBrand(e.value)}
+                                                placeholder="ຍີ່ຫໍ້ລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carBrand
+                                                })}
+                                            />
+                                            {submitted && !carBrand.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນຍີ່ຫໍ້ລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ລຸ້ນລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carGen" className="font-bold">
+                                                ລຸ້ນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carGen"
+                                                value={carGen}
+                                                options={carGens}
+                                                onChange={(e) => setCarGen(e.value)}
+                                                placeholder="ລຸ້ນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carGen
+                                                })}
+                                            />
+                                            {submitted && !carGen.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນລຸ້ນລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div className="flex justify-content-center gap-2 mt-4">
+                                <Button
+                                    label="ບັນທຶກຂໍ້ມູນ"
+                                    icon="pi pi-check"
+                                    onClick={handleTab3Submit}
+                                    className="w-1 bg-blue-800 border-none"
+                                />
+                            </div>
+
                         </TabPanel>
+
+                        {/* ຂໍ້ມູນເອກະສານຜູ້ນຳໃຊ້ລົດ */}
                         <TabPanel
+                            disabled={!isTab1Completed || !isTab2Completed || !isTab3Completed}
                             header={
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <FaAddressCard size={15} />
@@ -435,11 +938,178 @@ const AddCarPage: React.FC<AddcarProps> = ({
                                 </div>
                             }
                         >
-                            <p className="m-0">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus cum doloribus esse nesciunt fuga voluptate asperiores eligendi? Harum modi provident minima dolore voluptatem facere consequuntur deleniti eaque praesentium quasi eveniet distinctio placeat accusantium, ipsum magni quo earum! Doloribus qui architecto aut dolorum alias deserunt atque, voluptates necessitatibus culpa cumque corrupti?
-                            </p>
+                            <div className="p-fluid">
+                                <div className="grid">
+
+                                    {/* ປ້າຍທະບຽນລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="PlateType" className="font-bold">
+                                                ປ້າຍທະບຽນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <InputText
+                                                id="PlateType"
+                                                value={plateType}
+                                                onChange={(e) => setPlateType(e.target.value)}
+                                                placeholder="ກະລຸນາປ້ອນປ້າຍທະບຽນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !plateType.trim()
+                                                })}
+                                            />
+                                            {submitted && !plateType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນປ້າຍທະບຽນລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ປະເພດທະບຽນລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="carPlateType" className="font-bold">
+                                                ປະເພດທະບຽນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carPlateType"
+                                                value={carPlateType}
+                                                options={carPlateTypes}
+                                                onChange={(e) => setCarPlateType(e.value)}
+                                                placeholder="ປະເພດທະບຽນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carPlateType
+                                                })}
+                                            />
+                                            {submitted && !carPlateType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນແຂວງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ປະເພດລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="carType" className="font-bold">
+                                                ປະເພດລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carType"
+                                                value={carType}
+                                                options={carTypes}
+                                                onChange={(e) => setCarType(e.value)}
+                                                placeholder="ປະເພດລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carType
+                                                })}
+                                            />
+                                            {submitted && !carType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນປະເພດລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ແຂວງລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="provincesCar" className="font-bold">
+                                                ແຂວງລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="provinceCar"
+                                                value={provinceCar}
+                                                options={provincesCar}
+                                                onChange={(e) => setProvinceCar(e.value)}
+                                                placeholder="ແຂວງລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !provinceCar
+                                                })}
+                                            />
+                                            {submitted && !provinceCar.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນແຂວງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ສີຂອງລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carColor" className="font-bold">
+                                                ສີຂອງລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <InputText
+                                                id="carColor"
+                                                value={carColor}
+                                                onChange={(e) => setCarColor(e.target.value)}
+                                                placeholder="ກະລຸນາປ້ອນສີຂອງລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carColor.trim()
+                                                })}
+                                            />
+                                            {submitted && !carColor.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນສີຂອງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ຍີ່ຫໍ້ລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carBrand" className="font-bold">
+                                                ຍີ່ຫໍ້ລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carBrand"
+                                                value={carBrand}
+                                                options={carBrands}
+                                                onChange={(e) => setCarBrand(e.value)}
+                                                placeholder="ຍີ່ຫໍ້ລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carBrand
+                                                })}
+                                            />
+                                            {submitted && !carBrand.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນຍີ່ຫໍ້ລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ລຸ້ນລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carGen" className="font-bold">
+                                                ລຸ້ນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carGen"
+                                                value={carGen}
+                                                options={carGens}
+                                                onChange={(e) => setCarGen(e.value)}
+                                                placeholder="ລຸ້ນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carGen
+                                                })}
+                                            />
+                                            {submitted && !carGen.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນລຸ້ນລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div className="flex justify-content-center gap-2 mt-4">
+                                <Button
+                                    label="ບັນທຶກຂໍ້ມູນ"
+                                    icon="pi pi-check"
+                                    onClick={handleTab4Submit}
+                                    className="w-1 bg-blue-800 border-none"
+                                />
+                            </div>
                         </TabPanel>
+
+                        {/* ຮູບພາບລົດ & ເອກະສານລົດPDF */}
                         <TabPanel
+                            disabled={!isTab1Completed || !isTab2Completed || !isTab3Completed || !isTab4Completed}
                             header={
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <FaFilePdf size={15} />
@@ -447,9 +1117,174 @@ const AddCarPage: React.FC<AddcarProps> = ({
                                 </div>
                             }
                         >
-                            <p className="m-0">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore deleniti omnis velit, magni perspiciatis laudantium harum? Consequatur tenetur, veniam fugit alias ullam itaque eius voluptatibus dolorum molestias vero, deserunt officiis, sint nam ab eveniet dolores voluptatem et nobis. Quasi, amet. Hic similique nulla, laboriosam autem obcaecati asperiores qui laudantium dolorem.
-                            </p>
+                            <div className="p-fluid">
+                                <div className="grid">
+
+                                    {/* ປ້າຍທະບຽນລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="PlateType" className="font-bold">
+                                                ປ້າຍທະບຽນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <InputText
+                                                id="PlateType"
+                                                value={plateType}
+                                                onChange={(e) => setPlateType(e.target.value)}
+                                                placeholder="ກະລຸນາປ້ອນປ້າຍທະບຽນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !plateType.trim()
+                                                })}
+                                            />
+                                            {submitted && !plateType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນປ້າຍທະບຽນລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ປະເພດທະບຽນລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="carPlateType" className="font-bold">
+                                                ປະເພດທະບຽນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carPlateType"
+                                                value={carPlateType}
+                                                options={carPlateTypes}
+                                                onChange={(e) => setCarPlateType(e.value)}
+                                                placeholder="ປະເພດທະບຽນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carPlateType
+                                                })}
+                                            />
+                                            {submitted && !carPlateType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນແຂວງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ປະເພດລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="carType" className="font-bold">
+                                                ປະເພດລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carType"
+                                                value={carType}
+                                                options={carTypes}
+                                                onChange={(e) => setCarType(e.value)}
+                                                placeholder="ປະເພດລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carType
+                                                })}
+                                            />
+                                            {submitted && !carType.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນປະເພດລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ແຂວງລົດ */}
+                                    <div className="col-12 md:col-6">
+                                        <div className="field">
+                                            <label htmlFor="provincesCar" className="font-bold">
+                                                ແຂວງລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="provinceCar"
+                                                value={provinceCar}
+                                                options={provincesCar}
+                                                onChange={(e) => setProvinceCar(e.value)}
+                                                placeholder="ແຂວງລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !provinceCar
+                                                })}
+                                            />
+                                            {submitted && !provinceCar.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນແຂວງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ສີຂອງລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carColor" className="font-bold">
+                                                ສີຂອງລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <InputText
+                                                id="carColor"
+                                                value={carColor}
+                                                onChange={(e) => setCarColor(e.target.value)}
+                                                placeholder="ກະລຸນາປ້ອນສີຂອງລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carColor.trim()
+                                                })}
+                                            />
+                                            {submitted && !carColor.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນສີຂອງລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ຍີ່ຫໍ້ລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carBrand" className="font-bold">
+                                                ຍີ່ຫໍ້ລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carBrand"
+                                                value={carBrand}
+                                                options={carBrands}
+                                                onChange={(e) => setCarBrand(e.value)}
+                                                placeholder="ຍີ່ຫໍ້ລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carBrand
+                                                })}
+                                            />
+                                            {submitted && !carBrand.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນຍີ່ຫໍ້ລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* ລຸ້ນລົດ */}
+                                    <div className="col-12 md:col-4">
+                                        <div className="field">
+                                            <label htmlFor="carGen" className="font-bold">
+                                                ລຸ້ນລົດ <span className="text-red-500">*</span>
+                                            </label>
+                                            <Dropdown
+                                                id="carGen"
+                                                value={carGen}
+                                                options={carGens}
+                                                onChange={(e) => setCarGen(e.value)}
+                                                placeholder="ລຸ້ນລົດ"
+                                                className={classNames({
+                                                    'p-invalid': submitted && !carGen
+                                                })}
+                                            />
+                                            {submitted && !carGen.trim() && (
+                                                <small className="p-invalid text-red-500">ກະລຸນາປ້ອນລຸ້ນລົດ</small>
+                                            )}
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div className="flex justify-content-center gap-2 mt-4">
+                                    <Button
+                                        label="ບັນທຶກຂໍ້ມູນ"
+                                        icon="pi pi-check"
+                                        onClick={handleTab4Submit}
+                                        className="w-1 bg-blue-800 border-none"
+                                    />
+                                </div>
+
+                            </div>
                         </TabPanel>
 
                     </TabView>
@@ -467,14 +1302,21 @@ const AddCarPage: React.FC<AddcarProps> = ({
                         disabled={activeIndex === 0}
                         className="bg-blue-800 border-none"
                     />
-                    <Button
-                        label="ຕໍ່ໄປ"
-                        icon="pi pi-arrow-right"
-                        iconPos="right"
-                        onClick={() => setActiveIndex(activeIndex + 1)}
-                        disabled={activeIndex === 4}
-                        className="bg-blue-800 border-none"
-                    />
+                    {activeIndex !== 4 && (
+                        <Button
+                            label="ຕໍ່ໄປ"
+                            icon="pi pi-arrow-right"
+                            iconPos="right"
+                            onClick={() => setActiveIndex(activeIndex + 1)}
+                            disabled={
+                                (activeIndex === 0 && !isTab1Completed) ||
+                                (activeIndex === 1 && !isTab2Completed) ||
+                                (activeIndex === 2 && !isTab3Completed) ||
+                                (activeIndex === 3 && !isTab4Completed)
+                            }
+                            className="bg-blue-800 border-none"
+                        />
+                    )}
                 </div>
 
             </div>
